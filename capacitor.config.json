@@ -1,0 +1,13 @@
+{
+  "appId": "com.eyedeu.bubblepop",
+  "appName": "Bubble Pop Mania",
+  "webDir": "./",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "backgroundColor": "#3B82F6",
+      "showSpinner": false
+    }
+  }
+}
