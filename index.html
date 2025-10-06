@@ -39,6 +39,7 @@
             
             <button class="btn btn--primary btn--lg" id="play-btn">🎯 OYNA</button>
             <button class="btn btn--secondary" id="tutorial-btn">📚 Nasıl Oynanır</button>
+            <button class="btn btn--secondary" id="download-mobile-btn">📱 Telefona İndir</button>
             <button class="btn btn--secondary" id="achievements-btn">🏆 Başarılar</button>
             <button class="btn btn--secondary" id="settings-btn">⚙️ Ayarlar</button>
             
@@ -91,6 +92,48 @@
                 </div>
             </div>
             <button class="btn btn--primary" id="tutorial-close">Anladım!</button>
+        </div>
+    </div>
+
+    <!-- QR Kod Modal -->
+    <div id="qr-modal" class="screen hidden overlay">
+        <div class="modal-container qr-modal">
+            <h2>📱 Telefona İndir</h2>
+            <p>Bu QR kodu telefonunla tara ve oyunu ana ekrana ekle!</p>
+            
+            <div class="qr-container">
+                <div id="qr-code-display">QR Kod Yükleniyor...</div>
+            </div>
+            
+            <div class="download-options">
+                <div class="download-option">
+                    <h3>📱 Android & iPhone</h3>
+                    <p>1. QR kodu telefonun kamerası ile tara<br>
+                       2. Çıkan linke tıkla<br>
+                       3. "Ana ekrana ekle" seçeneğini seç<br>
+                       4. Artık telefonda app gibi çalışır! 🎮</p>
+                </div>
+                
+                <div class="download-option">
+                    <h3>🔗 Manuel Link</h3>
+                    <p>QR kod çalışmıyorsa bu linki kullan:</p>
+                    <div class="url-container">
+                        <input type="text" id="game-url" readonly class="url-input" value="https://eyedeu.github.io/bubble-pop-mania">
+                        <button id="copy-url-btn" class="btn btn--small">📋 Kopyala</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-share">
+                <h3>🚀 Arkadaşlarla Paylaş</h3>
+                <div class="social-buttons">
+                    <button class="btn btn--social whatsapp" id="share-whatsapp">📲 WhatsApp</button>
+                    <button class="btn btn--social telegram" id="share-telegram">✈️ Telegram</button>
+                    <button class="btn btn--social twitter" id="share-twitter">🐦 Twitter</button>
+                </div>
+            </div>
+            
+            <button class="btn btn--secondary" id="close-qr-btn">Kapat</button>
         </div>
     </div>
 
