@@ -1,13 +1,21 @@
 {
-  "appId": "com.eyedeu.bubblepop",
+  "appId": "com.eyedeu.bubblepopmania",
   "appName": "Bubble Pop Mania",
   "webDir": "./",
   "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 3000,
+      "launchShowDuration": 2000,
       "backgroundColor": "#3B82F6",
+      "androidSplashResourceName": "splash",
       "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#3B82F6"
     }
   }
 }
