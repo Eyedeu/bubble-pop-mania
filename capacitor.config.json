@@ -10,7 +10,6 @@
     "SplashScreen": {
       "launchShowDuration": 2000,
       "backgroundColor": "#3B82F6",
-      "androidSplashResourceName": "splash",
       "showSpinner": false
     },
     "StatusBar": {
