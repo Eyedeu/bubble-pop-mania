@@ -22,19 +22,19 @@
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
             <div class="loading-logo">🫧</div>
-            <div class="loading-text">Bubble Pop Mania</div>
-            <div class="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
+            <div class="loading-text" id="loading-title">Bubble Pop Mania</div>
+            <div class="loading-tip" id="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
         </div>
     </div>
 
     <!-- Ana Menü -->
     <div id="main-menu" class="screen hidden">
         <div class="menu-container">
-            <h1 class="game-title">🫧 BUBBLE POP MANIA 🫧</h1>
-            <p class="game-subtitle">Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!</p>
+            <h1 class="game-title" id="title">🫧 BUBBLE POP MANIA 🫧</h1>
+            <p class="game-subtitle" id="subtitle">Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!</p>
             
             <div class="daily-streak">
-                <span class="streak-text">🔥 Günlük Seri: <span id="daily-streak">1</span> Gün</span>
+                <span class="streak-text" id="daily-streak-text">🔥 Günlük Seri: <span id="daily-streak">1</span> Gün</span>
             </div>
             
             <button class="btn btn--primary btn--lg" id="play-btn">🎯 OYNA</button>
@@ -44,7 +44,7 @@
             <button class="btn btn--secondary" id="settings-btn">⚙️ Ayarlar</button>
             
             <div class="energy-container">
-                <span class="energy-label">⚡ Enerji:</span>
+                <span class="energy-label" id="energy-label">⚡ Enerji:</span>
                 <div class="energy-bar">
                     <div id="energy-fill" class="energy-fill"></div>
                 </div>
@@ -53,11 +53,11 @@
 
             <div class="stats-container">
                 <div class="stat-item">
-                    <span class="stat-label">En Yüksek Puan:</span>
+                    <span class="stat-label" id="high-score-label">En Yüksek Puan:</span>
                     <span id="high-score">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Toplam Oynama:</span>
+                    <span class="stat-label" id="total-games-label">Toplam Oynama:</span>
                     <span id="total-games">0</span>
                 </div>
             </div>
@@ -67,39 +67,67 @@
     <!-- Tutorial Ekranı -->
     <div id="tutorial-screen" class="screen hidden overlay">
         <div class="modal-container">
-            <h2>🎮 Nasıl Oynanır?</h2>
+            <h2 id="tutorial-title">🎮 Nasıl Oynanır?</h2>
             <div class="tutorial-content">
                 <div class="tutorial-step">
                     <span class="step-number">1</span>
-                    <p><strong>Kabarcıkları Patlat:</strong> Ekrana gelen kabarcıklara tıkla ve puan kazan!</p>
+                    <p><strong id="pop-title">Kabarcıkları Patlat:</strong> <span id="pop-desc">Ekrana gelen kabarcıklara tıkla ve puan kazan!</span></p>
                 </div>
                 <div class="tutorial-step">
                     <span class="step-number">2</span>
-                    <p><strong>Renkli Puanlar:</strong><br>
-                    🔵 Mavi = 1 puan<br>
+                    <p><strong id="color-title">Renkli Puanlar:</strong><br>
+                    <span id="color-desc">🔵 Mavi = 1 puan<br>
                     🟢 Yeşil = 2 puan<br>  
                     🔴 Kırmızı = 5 puan<br>
                     🟡 Altın = 10 puan<br>
-                    🟣 Elmas = 50 puan</p>
+                    🟣 Elmas = 50 puan</span></p>
                 </div>
                 <div class="tutorial-step">
                     <span class="step-number">3</span>
-                    <p><strong>Combo Sistemi:</strong> Arka arkaya balon patlatarak combo yap ve daha fazla puan kazan!</p>
+                    <p><strong id="combo-title">Combo Sistemi:</strong> <span id="combo-desc">Arka arkaya balon patlatarak combo yap ve daha fazla puan kazan!</span></p>
                 </div>
                 <div class="tutorial-step">
                     <span class="step-number">4</span>
-                    <p><strong>Dikkat:</strong> Kabarcıklar yukarı çıkıp kaçarsa canın azalır. 5 can bitince oyun biter!</p>
+                    <p><strong id="warning-title">Dikkat:</strong> <span id="warning-desc">Kabarcıklar yukarı çıkıp kaçarsa canın azalır. 5 can bitince oyun biter!</span></p>
                 </div>
             </div>
             <button class="btn btn--primary" id="tutorial-close">Anladım!</button>
         </div>
     </div>
 
+    <!-- Ayarlar Ekranı -->
+    <div id="settings-screen" class="screen hidden overlay">
+        <div class="modal-container">
+            <h2 id="settings-title">⚙️ Ayarlar</h2>
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label for="language-select" id="language-label">🌍 Dil:</label>
+                    <select id="language-select" class="setting-select">
+                        <option value="tr">🇹🇷 Türkçe</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label id="sound-label">🔊 Ses:</label>
+                    <input type="checkbox" id="sound-toggle" checked>
+                </div>
+                <div class="setting-item">
+                    <label id="vibration-label">📳 Titreşim:</label>
+                    <input type="checkbox" id="vibration-toggle" checked>
+                </div>
+            </div>
+            <button class="btn btn--secondary" id="settings-close">Kapat</button>
+        </div>
+    </div>
+
     <!-- QR Kod Modal -->
     <div id="qr-modal" class="screen hidden overlay">
         <div class="modal-container qr-modal">
-            <h2>📱 Telefona İndir</h2>
-            <p>Bu QR kodu telefonunla tara ve oyunu ana ekrana ekle!</p>
+            <h2 id="download-title">📱 Telefona İndir</h2>
+            <p id="download-desc">Bu QR kodu telefonunla tara ve oyunu ana ekrana ekle!</p>
             
             <div class="qr-container">
                 <div id="qr-code-display">QR Kod Yükleniyor...</div>
@@ -107,16 +135,16 @@
             
             <div class="download-options">
                 <div class="download-option">
-                    <h3>📱 Android & iPhone</h3>
-                    <p>1. QR kodu telefonun kamerası ile tara<br>
+                    <h3 id="mobile-title">📱 Android & iPhone</h3>
+                    <p id="mobile-desc">1. QR kodu telefonun kamerası ile tara<br>
                        2. Çıkan linke tıkla<br>
                        3. "Ana ekrana ekle" seçeneğini seç<br>
                        4. Artık telefonda app gibi çalışır! 🎮</p>
                 </div>
                 
                 <div class="download-option">
-                    <h3>🔗 Manuel Link</h3>
-                    <p>QR kod çalışmıyorsa bu linki kullan:</p>
+                    <h3 id="manual-title">🔗 Manuel Link</h3>
+                    <p id="manual-desc">QR kod çalışmıyorsa bu linki kullan:</p>
                     <div class="url-container">
                         <input type="text" id="game-url" readonly class="url-input" value="https://eyedeu.github.io/bubble-pop-mania">
                         <button id="copy-url-btn" class="btn btn--small">📋 Kopyala</button>
@@ -125,7 +153,7 @@
             </div>
 
             <div class="social-share">
-                <h3>🚀 Arkadaşlarla Paylaş</h3>
+                <h3 id="share-title">🚀 Arkadaşlarla Paylaş</h3>
                 <div class="social-buttons">
                     <button class="btn btn--social whatsapp" id="share-whatsapp">📲 WhatsApp</button>
                     <button class="btn btn--social telegram" id="share-telegram">✈️ Telegram</button>
@@ -143,18 +171,18 @@
         <div class="game-hud">
             <div class="hud-left">
                 <div class="hud-item">
-                    <span class="label">Puan:</span>
+                    <span class="label" id="score-label">Puan:</span>
                     <span id="current-score" class="value">0</span>
                 </div>
                 <div class="hud-item">
-                    <span class="label">Combo:</span>
+                    <span class="label" id="combo-label">Combo:</span>
                     <span id="current-combo" class="value combo-value">1x</span>
                 </div>
             </div>
             
             <div class="hud-right">
                 <div class="hud-item">
-                    <span class="label">Seviye:</span>
+                    <span class="label" id="level-label">Seviye:</span>
                     <span id="current-level" class="value">1</span>
                 </div>
                 <div class="hud-item">
@@ -174,22 +202,22 @@
 
         <!-- Power-ups -->
         <div class="powerups-container">
-            <button class="powerup-btn" id="freeze-btn" title="5 saniye dondurur">🧊<span>Dondur</span></button>
-            <button class="powerup-btn" id="double-btn" title="10 saniye 2x puan">⭐<span>2x Puan</span></button>
-            <button class="powerup-btn" id="magnet-btn" title="Kabarcıkları çeker">🧲<span>Mıknatıs</span></button>
-            <button class="powerup-btn" id="auto-btn" title="15 saniye otomatik patlatır">🤖<span>Otomatik</span></button>
+            <button class="powerup-btn" id="freeze-btn" title="5 saniye dondurur">🧊<span id="freeze-text">Dondur</span></button>
+            <button class="powerup-btn" id="double-btn" title="10 saniye 2x puan">⭐<span id="double-text">2x Puan</span></button>
+            <button class="powerup-btn" id="magnet-btn" title="Kabarcıkları çeker">🧲<span id="magnet-text">Mıknatıs</span></button>
+            <button class="powerup-btn" id="auto-btn" title="15 saniye otomatik patlatır">🤖<span id="auto-text">Otomatik</span></button>
         </div>
     </div>
 
     <!-- Pause Ekranı -->
     <div id="pause-screen" class="screen hidden overlay">
         <div class="modal-container">
-            <h2>⏸️ Oyun Duraklatıldı</h2>
-            <p>Oyuna devam etmek istediğinde butona bas!</p>
+            <h2 id="pause-title">⏸️ Oyun Duraklatıldı</h2>
+            <p id="pause-desc">Oyuna devam etmek istediğinde butona bas!</p>
             <div class="pause-stats">
-                <div class="stat">Mevcut Puan: <span id="pause-score">0</span></div>
-                <div class="stat">Combo: <span id="pause-combo">1x</span></div>
-                <div class="stat">Kalan Can: <span id="pause-lives">5</span></div>
+                <div class="stat" id="pause-score-text">Mevcut Puan: <span id="pause-score">0</span></div>
+                <div class="stat" id="pause-combo-text">Combo: <span id="pause-combo">1x</span></div>
+                <div class="stat" id="pause-lives-text">Kalan Can: <span id="pause-lives">5</span></div>
             </div>
             <button class="btn btn--primary" id="resume-btn">▶️ Devam Et</button>
             <button class="btn btn--secondary" id="restart-btn">🔄 Yeniden Başla</button>
@@ -203,24 +231,24 @@
             <h2 id="game-over-title">🎯 Oyun Bitti!</h2>
             <div class="final-stats">
                 <div class="big-score">
-                    <div class="score-label">Final Puanın</div>
+                    <div class="score-label" id="final-score-label">Final Puanın</div>
                     <div id="final-score" class="score-value">0</div>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <span class="stat-label">En Yüksek Combo:</span>
+                        <span class="stat-label" id="best-combo-label">En Yüksek Combo:</span>
                         <span id="best-combo" class="stat-value">1x</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Seviye:</span>
+                        <span class="stat-label" id="final-level-label">Seviye:</span>
                         <span id="final-level" class="stat-value">1</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Patlayan Balon:</span>
+                        <span class="stat-label" id="bubbles-popped-label">Patlayan Balon:</span>
                         <span id="bubbles-popped" class="stat-value">0</span>
                     </div>
                     <div class="stat-item" id="new-record" style="display: none;">
-                        <span class="record-text">🎉 YENİ REKOR!</span>
+                        <span class="record-text" id="new-record-text">🎉 YENİ REKOR!</span>
                     </div>
                 </div>
             </div>
