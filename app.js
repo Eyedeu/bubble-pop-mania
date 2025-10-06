@@ -1,5 +1,453 @@
-// Bubble Pop Mania - Advanced Level System & QR Code Features
-// Gelişmiş seviye sistemi + QR kod özellikli tam versiyon!
+// Bubble Pop Mania - Mükemmel Çalışır Versiyon + Çoklu Dil
+
+// Çoklu Dil Sistemi (5 Dil - Tam Çevrilmiş)
+const GAME_LANGUAGES = {
+    tr: {
+        // Ana Menü
+        title: "🫧 BUBBLE POP MANIA 🫧",
+        subtitle: "Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!",
+        play: "🎯 OYNA",
+        tutorial: "📚 Nasıl Oynanır",
+        downloadMobile: "📱 Telefona İndir",
+        achievements: "🏆 Başarılar",
+        settings: "⚙️ Ayarlar",
+        
+        // Stats
+        dailyStreak: "🔥 Günlük Seri:",
+        energy: "⚡ Enerji:",
+        highScore: "En Yüksek Puan:",
+        totalGames: "Toplam Oynama:",
+        
+        // Game HUD
+        score: "Puan:",
+        combo: "Combo:",
+        level: "Seviye:",
+        
+        // Tutorial
+        tutorialTitle: "🎮 Nasıl Oynanır?",
+        popTitle: "Kabarcıkları Patlat:",
+        popDesc: "Ekrana gelen kabarcıklara tıkla ve puan kazan!",
+        colorTitle: "Renkli Puanlar:",
+        colorDesc: "🔵 Mavi = 1 puan\n🟢 Yeşil = 2 puan\n🔴 Kırmızı = 5 puan\n🟡 Altın = 10 puan\n🟣 Elmas = 50 puan",
+        comboTitle: "Combo Sistemi:",
+        comboDesc: "Arka arkaya balon patlatarak combo yap ve daha fazla puan kazan!",
+        warningTitle: "Dikkat:",
+        warningDesc: "Kabarcıklar yukarı çıkıp kaçarsa canın azalır. 5 can bitince oyun biter!",
+        understood: "Anladım!",
+        
+        // Settings
+        settingsTitle: "⚙️ Ayarlar",
+        languageLabel: "🌍 Dil:",
+        soundLabel: "🔊 Ses:",
+        vibrationLabel: "📳 Titreşim:",
+        close: "Kapat",
+        
+        // QR Modal
+        downloadTitle: "📱 Telefona İndir",
+        downloadDesc: "Bu QR kodu telefonunla tara ve oyunu ana ekrana ekle!",
+        mobileTitle: "📱 Android & iPhone",
+        mobileDesc: "1. QR kodu telefonun kamerası ile tara\n2. Çıkan linke tıkla\n3. \"Ana ekrana ekle\" seçeneğini seç\n4. Artık telefonda app gibi çalışır! 🎮",
+        manualTitle: "🔗 Manuel Link",
+        manualDesc: "QR kod çalışmıyorsa bu linki kullan:",
+        copy: "📋 Kopyala",
+        shareTitle: "🚀 Arkadaşlarla Paylaş",
+        
+        // Pause & Game Over
+        pauseTitle: "⏸️ Oyun Duraklatıldı",
+        pauseDesc: "Oyuna devam etmek istediğinde butona bas!",
+        currentScore: "Mevcut Puan:",
+        remainingLives: "Kalan Can:",
+        resume: "▶️ Devam Et",
+        restart: "🔄 Yeniden Başla",
+        mainMenu: "🏠 Ana Menü",
+        gameOver: "🎯 Oyun Bitti!",
+        finalScore: "Final Puanın",
+        bestCombo: "En Yüksek Combo:",
+        finalLevel: "Seviye:",
+        bubblesPopped: "Patlayan Balon:",
+        newRecord: "🎉 YENİ REKOR!",
+        playAgain: "🔄 Tekrar Oyna",
+        shareScore: "📱 Puanı Paylaş",
+        backToMenu: "🏠 Ana Menü",
+        
+        // Power-ups
+        freeze: "Dondur",
+        double: "2x Puan",
+        magnet: "Mıknatıs",
+        auto: "Otomatik",
+        
+        // Loading
+        loadingTip: "Kabarcıklara tıklayarak puan kazan!"
+    },
+    
+    en: {
+        title: "🫧 BUBBLE POP MANIA 🫧",
+        subtitle: "Millions Are Addicted to This Game!",
+        play: "🎯 PLAY",
+        tutorial: "📚 How To Play",
+        downloadMobile: "📱 Download Mobile",
+        achievements: "🏆 Achievements",
+        settings: "⚙️ Settings",
+        
+        dailyStreak: "🔥 Daily Streak:",
+        energy: "⚡ Energy:",
+        highScore: "High Score:",
+        totalGames: "Total Games:",
+        
+        score: "Score:",
+        combo: "Combo:",
+        level: "Level:",
+        
+        tutorialTitle: "🎮 How To Play?",
+        popTitle: "Pop Bubbles:",
+        popDesc: "Tap/click the bubbles to pop them and earn points!",
+        colorTitle: "Colored Points:",
+        colorDesc: "🔵 Blue = 1 point\n🟢 Green = 2 points\n🔴 Red = 5 points\n🟡 Gold = 10 points\n🟣 Diamond = 50 points",
+        comboTitle: "Combo System:",
+        comboDesc: "Pop bubbles consecutively to make combos and earn more points!",
+        warningTitle: "Warning:",
+        warningDesc: "If bubbles escape to the top, you lose lives. Game ends when 5 lives are lost!",
+        understood: "Got it!",
+        
+        settingsTitle: "⚙️ Settings",
+        languageLabel: "🌍 Language:",
+        soundLabel: "🔊 Sound:",
+        vibrationLabel: "📳 Vibration:",
+        close: "Close",
+        
+        downloadTitle: "📱 Download Mobile",
+        downloadDesc: "Scan this QR code with your phone and add the game to home screen!",
+        mobileTitle: "📱 Android & iPhone",
+        mobileDesc: "1. Scan QR code with phone camera\n2. Click on the link\n3. Select \"Add to Home Screen\"\n4. Now it works like an app on your phone! 🎮",
+        manualTitle: "🔗 Manual Link",
+        manualDesc: "Use this link if QR code doesn't work:",
+        copy: "📋 Copy",
+        shareTitle: "🚀 Share with Friends",
+        
+        pauseTitle: "⏸️ Game Paused",
+        pauseDesc: "Press button when you want to continue!",
+        currentScore: "Current Score:",
+        remainingLives: "Remaining Lives:",
+        resume: "▶️ Resume",
+        restart: "🔄 Restart",
+        mainMenu: "🏠 Main Menu",
+        gameOver: "🎯 Game Over!",
+        finalScore: "Final Score",
+        bestCombo: "Best Combo:",
+        finalLevel: "Level:",
+        bubblesPopped: "Bubbles Popped:",
+        newRecord: "🎉 NEW RECORD!",
+        playAgain: "🔄 Play Again",
+        shareScore: "📱 Share Score",
+        backToMenu: "🏠 Main Menu",
+        
+        freeze: "Freeze",
+        double: "2x Points",
+        magnet: "Magnet",
+        auto: "Auto",
+        
+        loadingTip: "Tap bubbles to earn points!"
+    },
+    
+    de: {
+        title: "🫧 BUBBLE POP MANIA 🫧",
+        subtitle: "Millionen sind süchtig nach diesem Spiel!",
+        play: "🎯 SPIELEN",
+        tutorial: "📚 Anleitung",
+        downloadMobile: "📱 Mobile Herunterladen",
+        achievements: "🏆 Erfolge",
+        settings: "⚙️ Einstellungen",
+        
+        dailyStreak: "🔥 Tägliche Serie:",
+        energy: "⚡ Energie:",
+        highScore: "Highscore:",
+        totalGames: "Spiele Gesamt:",
+        
+        score: "Punkte:",
+        combo: "Kombo:",
+        level: "Level:",
+        
+        tutorialTitle: "🎮 Wie spielt man?",
+        popTitle: "Blasen platzen:",
+        popDesc: "Tippe/klicke auf die Blasen um sie zu platzen und Punkte zu verdienen!",
+        colorTitle: "Farbige Punkte:",
+        colorDesc: "🔵 Blau = 1 Punkt\n🟢 Grün = 2 Punkte\n🔴 Rot = 5 Punkte\n🟡 Gold = 10 Punkte\n🟣 Diamant = 50 Punkte",
+        comboTitle: "Kombo System:",
+        comboDesc: "Platze Blasen hintereinander für Kombos und mehr Punkte!",
+        warningTitle: "Achtung:",
+        warningDesc: "Wenn Blasen nach oben entkommen, verlierst du Leben. Spiel endet bei 0 Leben!",
+        understood: "Verstanden!",
+        
+        settingsTitle: "⚙️ Einstellungen",
+        languageLabel: "🌍 Sprache:",
+        soundLabel: "🔊 Ton:",
+        vibrationLabel: "📳 Vibration:",
+        close: "Schließen",
+        
+        downloadTitle: "📱 Mobile Herunterladen",
+        downloadDesc: "Scanne diesen QR-Code mit deinem Handy und füge das Spiel zum Homescreen hinzu!",
+        mobileTitle: "📱 Android & iPhone",
+        mobileDesc: "1. QR-Code mit Handykamera scannen\n2. Auf den Link klicken\n3. \"Zum Homescreen hinzufügen\" wählen\n4. Jetzt funktioniert es wie eine App! 🎮",
+        manualTitle: "🔗 Manueller Link",
+        manualDesc: "Nutze diesen Link falls QR-Code nicht funktioniert:",
+        copy: "📋 Kopieren",
+        shareTitle: "🚀 Mit Freunden teilen",
+        
+        pauseTitle: "⏸️ Spiel pausiert",
+        pauseDesc: "Drücke den Button wenn du weitermachen möchtest!",
+        currentScore: "Aktuelle Punkte:",
+        remainingLives: "Verbleibende Leben:",
+        resume: "▶️ Fortsetzen",
+        restart: "🔄 Neustart",
+        mainMenu: "🏠 Hauptmenü",
+        gameOver: "🎯 Spiel Vorbei!",
+        finalScore: "Endpunktzahl",
+        bestCombo: "Beste Kombo:",
+        finalLevel: "Level:",
+        bubblesPopped: "Blasen geplatzt:",
+        newRecord: "🎉 NEUER REKORD!",
+        playAgain: "🔄 Nochmal spielen",
+        shareScore: "📱 Punkte teilen",
+        backToMenu: "🏠 Hauptmenü",
+        
+        freeze: "Einfrieren",
+        double: "2x Punkte",
+        magnet: "Magnet",
+        auto: "Auto",
+        
+        loadingTip: "Tippe auf Blasen um Punkte zu verdienen!"
+    },
+    
+    fr: {
+        title: "🫧 BUBBLE POP MANIA 🫧",
+        subtitle: "Des millions sont accros à ce jeu !",
+        play: "🎯 JOUER",
+        tutorial: "📚 Comment Jouer",
+        downloadMobile: "📱 Télécharger Mobile",
+        achievements: "🏆 Succès",
+        settings: "⚙️ Paramètres",
+        
+        dailyStreak: "🔥 Série Quotidienne:",
+        energy: "⚡ Énergie:",
+        highScore: "Meilleur Score:",
+        totalGames: "Parties Totales:",
+        
+        score: "Score:",
+        combo: "Combo:",
+        level: "Niveau:",
+        
+        tutorialTitle: "🎮 Comment Jouer?",
+        popTitle: "Éclater les Bulles:",
+        popDesc: "Tape/clique sur les bulles pour les éclater et gagner des points!",
+        colorTitle: "Points Colorés:",
+        colorDesc: "🔵 Bleu = 1 point\n🟢 Vert = 2 points\n🔴 Rouge = 5 points\n🟡 Or = 10 points\n🟣 Diamant = 50 points",
+        comboTitle: "Système de Combo:",
+        comboDesc: "Éclate les bulles consécutivement pour faire des combos et gagner plus de points!",
+        warningTitle: "Attention:",
+        warningDesc: "Si les bulles s'échappent vers le haut, tu perds des vies. Jeu terminé à 0 vie!",
+        understood: "Compris!",
+        
+        settingsTitle: "⚙️ Paramètres",
+        languageLabel: "🌍 Langue:",
+        soundLabel: "🔊 Son:",
+        vibrationLabel: "📳 Vibration:",
+        close: "Fermer",
+        
+        downloadTitle: "📱 Télécharger Mobile",
+        downloadDesc: "Scanne ce code QR avec ton téléphone et ajoute le jeu à l'écran d'accueil!",
+        mobileTitle: "📱 Android & iPhone",
+        mobileDesc: "1. Scanner le QR code avec l'appareil photo\n2. Cliquer sur le lien\n3. Sélectionner \"Ajouter à l'écran d'accueil\"\n4. Maintenant ça fonctionne comme une app! 🎮",
+        manualTitle: "🔗 Lien Manuel",
+        manualDesc: "Utilise ce lien si le QR code ne fonctionne pas:",
+        copy: "📋 Copier",
+        shareTitle: "🚀 Partager avec des amis",
+        
+        pauseTitle: "⏸️ Jeu en pause",
+        pauseDesc: "Appuie sur le bouton quand tu veux continuer!",
+        currentScore: "Score Actuel:",
+        remainingLives: "Vies Restantes:",
+        resume: "▶️ Continuer",
+        restart: "🔄 Recommencer",
+        mainMenu: "🏠 Menu Principal",
+        gameOver: "🎯 Jeu Terminé!",
+        finalScore: "Score Final",
+        bestCombo: "Meilleure Combo:",
+        finalLevel: "Niveau:",
+        bubblesPopped: "Bulles Éclatées:",
+        newRecord: "🎉 NOUVEAU RECORD!",
+        playAgain: "🔄 Rejouer",
+        shareScore: "📱 Partager Score",
+        backToMenu: "🏠 Menu Principal",
+        
+        freeze: "Geler",
+        double: "2x Points",
+        magnet: "Aimant",
+        auto: "Auto",
+        
+        loadingTip: "Tape sur les bulles pour gagner des points!"
+    },
+    
+    es: {
+        title: "🫧 BUBBLE POP MANIA 🫧",
+        subtitle: "¡Millones son adictos a este juego!",
+        play: "🎯 JUGAR",
+        tutorial: "📚 Cómo Jugar",
+        downloadMobile: "📱 Descargar Móvil",
+        achievements: "🏆 Logros",
+        settings: "⚙️ Ajustes",
+        
+        dailyStreak: "🔥 Racha Diaria:",
+        energy: "⚡ Energía:",
+        highScore: "Puntuación Máxima:",
+        totalGames: "Partidas Totales:",
+        
+        score: "Puntuación:",
+        combo: "Combo:",
+        level: "Nivel:",
+        
+        tutorialTitle: "🎮 ¿Cómo Jugar?",
+        popTitle: "Explotar Burbujas:",
+        popDesc: "¡Toca/haz clic en las burbujas para explotarlas y ganar puntos!",
+        colorTitle: "Puntos de Colores:",
+        colorDesc: "🔵 Azul = 1 punto\n🟢 Verde = 2 puntos\n🔴 Rojo = 5 puntos\n🟡 Oro = 10 puntos\n🟣 Diamante = 50 puntos",
+        comboTitle: "Sistema de Combo:",
+        comboDesc: "¡Explota burbujas consecutivamente para hacer combos y ganar más puntos!",
+        warningTitle: "Atención:",
+        warningDesc: "Si las burbujas se escapan hacia arriba, pierdes vidas. ¡El juego termina con 0 vidas!",
+        understood: "¡Entendido!",
+        
+        settingsTitle: "⚙️ Ajustes",
+        languageLabel: "🌍 Idioma:",
+        soundLabel: "🔊 Sonido:",
+        vibrationLabel: "📳 Vibración:",
+        close: "Cerrar",
+        
+        downloadTitle: "📱 Descargar Móvil",
+        downloadDesc: "¡Escanea este código QR con tu teléfono y añade el juego a la pantalla de inicio!",
+        mobileTitle: "📱 Android & iPhone",
+        mobileDesc: "1. Escanear código QR con cámara del teléfono\n2. Hacer clic en el enlace\n3. Seleccionar \"Añadir a pantalla de inicio\"\n4. ¡Ahora funciona como una app! 🎮",
+        manualTitle: "🔗 Enlace Manual",
+        manualDesc: "Usa este enlace si el código QR no funciona:",
+        copy: "📋 Copiar",
+        shareTitle: "🚀 Compartir con amigos",
+        
+        pauseTitle: "⏸️ Juego en Pausa",
+        pauseDesc: "¡Presiona el botón cuando quieras continuar!",
+        currentScore: "Puntuación Actual:",
+        remainingLives: "Vidas Restantes:",
+        resume: "▶️ Continuar",
+        restart: "🔄 Reiniciar",
+        mainMenu: "🏠 Menú Principal",
+        gameOver: "🎯 ¡Fin del Juego!",
+        finalScore: "Puntuación Final",
+        bestCombo: "Mejor Combo:",
+        finalLevel: "Nivel:",
+        bubblesPopped: "Burbujas Explotadas:",
+        newRecord: "🎉 ¡NUEVO RÉCORD!",
+        playAgain: "🔄 Jugar de nuevo",
+        shareScore: "📱 Compartir Puntuación",
+        backToMenu: "🏠 Menú Principal",
+        
+        freeze: "Congelar",
+        double: "2x Puntos",
+        magnet: "Imán",
+        auto: "Auto",
+        
+        loadingTip: "¡Toca las burbujas para ganar puntos!"
+    }
+};
+
+// Dil yönetimi
+let CURRENT_LANG = localStorage.getItem('gameLang') || 'tr';
+
+// Dil güncelleme fonksiyonu
+function updateLanguageTexts() {
+    const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+    
+    // Helper function
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el && text) el.textContent = text;
+    };
+    
+    // Ana menü
+    setText('title', LANG.title);
+    setText('subtitle', LANG.subtitle);
+    setText('play-btn', LANG.play);
+    setText('tutorial-btn', LANG.tutorial);
+    setText('download-mobile-btn', LANG.downloadMobile);
+    setText('achievements-btn', LANG.achievements);
+    setText('settings-btn', LANG.settings);
+    
+    // Stats
+    setText('energy-label', LANG.energy);
+    setText('high-score-label', LANG.highScore);
+    setText('total-games-label', LANG.totalGames);
+    
+    // Game HUD
+    setText('score-label', LANG.score);
+    setText('combo-label', LANG.combo);
+    setText('level-label', LANG.level);
+    
+    // Tutorial
+    setText('tutorial-title', LANG.tutorialTitle);
+    setText('pop-title', LANG.popTitle);
+    setText('pop-desc', LANG.popDesc);
+    setText('color-title', LANG.colorTitle);
+    setText('color-desc', LANG.colorDesc);
+    setText('combo-title', LANG.comboTitle);
+    setText('combo-desc', LANG.comboDesc);
+    setText('warning-title', LANG.warningTitle);
+    setText('warning-desc', LANG.warningDesc);
+    setText('tutorial-close', LANG.understood);
+    
+    // Settings
+    setText('settings-title', LANG.settingsTitle);
+    setText('language-label', LANG.languageLabel);
+    setText('sound-label', LANG.soundLabel);
+    setText('vibration-label', LANG.vibrationLabel);
+    setText('settings-close', LANG.close);
+    
+    // QR Modal
+    setText('download-title', LANG.downloadTitle);
+    setText('download-desc', LANG.downloadDesc);
+    setText('mobile-title', LANG.mobileTitle);
+    setText('mobile-desc', LANG.mobileDesc);
+    setText('manual-title', LANG.manualTitle);
+    setText('manual-desc', LANG.manualDesc);
+    setText('copy-url-btn', LANG.copy);
+    setText('share-title', LANG.shareTitle);
+    setText('close-qr-btn', LANG.close);
+    
+    // Pause
+    setText('pause-title', LANG.pauseTitle);
+    setText('pause-desc', LANG.pauseDesc);
+    setText('resume-btn', LANG.resume);
+    setText('restart-btn', LANG.restart);
+    setText('main-menu-btn', LANG.mainMenu);
+    
+    // Game Over
+    setText('game-over-title', LANG.gameOver);
+    setText('final-score-label', LANG.finalScore);
+    setText('best-combo-label', LANG.bestCombo);
+    setText('final-level-label', LANG.finalLevel);
+    setText('bubbles-popped-label', LANG.bubblesPopped);
+    setText('new-record-text', LANG.newRecord);
+    setText('play-again-btn', LANG.playAgain);
+    setText('share-score-btn', LANG.shareScore);
+    setText('back-to-menu-btn', LANG.backToMenu);
+    
+    // Power-ups
+    setText('freeze-text', LANG.freeze);
+    setText('double-text', LANG.double);
+    setText('magnet-text', LANG.magnet);
+    setText('auto-text', LANG.auto);
+    
+    // Loading
+    setText('loading-tip', LANG.loadingTip);
+    
+    console.log('🌍 Dil güncellendi:', CURRENT_LANG);
+}
 
 class BubblePopGame {
     constructor() {
@@ -14,22 +462,16 @@ class BubblePopGame {
         this.totalGames = parseInt(localStorage.getItem('totalGames') || '0');
         this.bubblesPopped = 0;
         
-        // Seviye sistemi ayarları
+        // Seviye sistemi
         this.levelSettings = {
-            1: { speedMultiplier: 1.0, spawnDelay: 2000, maxBubbles: 6, rareChance: 0.1, bgColor: '#87CEEB', name: 'Başlangıç' },
-            2: { speedMultiplier: 1.2, spawnDelay: 1700, maxBubbles: 7, rareChance: 0.15, bgColor: '#78B3D6', name: 'Acemi' },
-            3: { speedMultiplier: 1.4, spawnDelay: 1400, maxBubbles: 8, rareChance: 0.2, bgColor: '#6998C1', name: 'Orta' },
-            4: { speedMultiplier: 1.6, spawnDelay: 1200, maxBubbles: 9, rareChance: 0.25, bgColor: '#5A7DAC', name: 'İleri' },
-            5: { speedMultiplier: 1.8, spawnDelay: 1000, maxBubbles: 10, rareChance: 0.3, bgColor: '#4B6297', name: 'Uzman' },
-            6: { speedMultiplier: 2.0, spawnDelay: 900, maxBubbles: 11, rareChance: 0.35, bgColor: '#3C4782', name: 'Pro' },
-            7: { speedMultiplier: 2.2, spawnDelay: 800, maxBubbles: 12, rareChance: 0.4, bgColor: '#2D2C6D', name: 'Master' },
-            8: { speedMultiplier: 2.4, spawnDelay: 700, maxBubbles: 13, rareChance: 0.45, bgColor: '#1E1158', name: 'Legend' },
-            9: { speedMultiplier: 2.6, spawnDelay: 600, maxBubbles: 14, rareChance: 0.5, bgColor: '#0F0043', name: 'God Mode' },
-            10: { speedMultiplier: 3.0, spawnDelay: 500, maxBubbles: 15, rareChance: 0.6, bgColor: '#000020', name: 'Impossible' }
+            1: { speedMultiplier: 1.0, spawnDelay: 2500, maxBubbles: 6, rareChance: 0.1, bgColor: '#87CEEB' },
+            2: { speedMultiplier: 1.2, spawnDelay: 2200, maxBubbles: 7, rareChance: 0.15, bgColor: '#78B3D6' },
+            3: { speedMultiplier: 1.4, spawnDelay: 1900, maxBubbles: 8, rareChance: 0.2, bgColor: '#6998C1' },
+            4: { speedMultiplier: 1.6, spawnDelay: 1600, maxBubbles: 9, rareChance: 0.25, bgColor: '#5A7DAC' },
+            5: { speedMultiplier: 1.8, spawnDelay: 1300, maxBubbles: 10, rareChance: 0.3, bgColor: '#4B6297' }
         };
         
         this.levelUpEffects = [];
-        this.levelTransitions = [];
         
         // Oyun nesneleri
         this.bubbles = [];
@@ -47,9 +489,9 @@ class BubblePopGame {
         this.animationId = null;
         this.lastTime = 0;
         this.spawnTimer = 0;
-        this.spawnDelay = 2000;
+        this.spawnDelay = 2500;
         
-        // Balon tipleri - puan değerleri
+        // Balon tipleri
         this.bubbleTypes = [
             {color: "#3B82F6", points: 1, name: "Mavi", frequency: 45},
             {color: "#10B981", points: 2, name: "Yeşil", frequency: 30},
@@ -62,16 +504,15 @@ class BubblePopGame {
     }
     
     init() {
-        console.log('🎮 Bubble Pop Mania - Advanced Version başlatılıyor...');
+        console.log('🎮 Bubble Pop Mania - Güzel + Çalışır Versiyon başlatılıyor...');
         this.showLoadingScreen();
         
-        // 1.5 saniye loading göster
         setTimeout(() => {
             this.setupCanvas();
             this.setupEventListeners();
             this.updateUI();
             this.showMainMenu();
-            console.log('✅ Oyun hazır - Gelişmiş seviye sistemi aktif!');
+            console.log('✅ Oyun hazır - Çoklu dil sistemi + güzel görünüm aktif!');
         }, 1500);
     }
     
@@ -85,7 +526,6 @@ class BubblePopGame {
         if (this.canvas) {
             this.ctx = this.canvas.getContext('2d');
             
-            // Responsive canvas boyutu
             const container = this.canvas.parentElement;
             const maxWidth = Math.min(400, container.clientWidth - 20);
             const maxHeight = Math.min(500, window.innerHeight * 0.6);
@@ -111,11 +551,25 @@ class BubblePopGame {
         if (achievementsBtn) achievementsBtn.addEventListener('click', () => this.showAchievements());
         if (settingsBtn) settingsBtn.addEventListener('click', () => this.showSettings());
         
-        // Tutorial
+        // Tutorial ve Settings kapatma
         const tutorialClose = document.getElementById('tutorial-close');
-        if (tutorialClose) tutorialClose.addEventListener('click', () => this.hideTutorial());
+        const settingsClose = document.getElementById('settings-close');
+        if (tutorialClose) tutorialClose.addEventListener('click', () => this.showMainMenu());
+        if (settingsClose) settingsClose.addEventListener('click', () => this.showMainMenu());
         
-        // QR Modal butonları
+        // Dil seçici
+        const langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.value = CURRENT_LANG;
+            langSelect.addEventListener('change', (e) => {
+                CURRENT_LANG = e.target.value;
+                localStorage.setItem('gameLang', CURRENT_LANG);
+                updateLanguageTexts();
+                console.log('🌍 Dil değiştirildi:', CURRENT_LANG);
+            });
+        }
+        
+        // QR Modal
         const closeQrBtn = document.getElementById('close-qr-btn');
         const copyUrlBtn = document.getElementById('copy-url-btn');
         const shareWhatsappBtn = document.getElementById('share-whatsapp');
@@ -139,7 +593,7 @@ class BubblePopGame {
         if (restartBtn) restartBtn.addEventListener('click', () => this.startGame());
         if (mainMenuBtn) mainMenuBtn.addEventListener('click', () => this.showMainMenu());
         
-        // Game Over butonları
+        // Game Over
         const playAgainBtn = document.getElementById('play-again-btn');
         const shareScoreBtn = document.getElementById('share-score-btn');
         const backToMenuBtn = document.getElementById('back-to-menu-btn');
@@ -148,7 +602,7 @@ class BubblePopGame {
         if (shareScoreBtn) shareScoreBtn.addEventListener('click', () => this.shareScore());
         if (backToMenuBtn) backToMenuBtn.addEventListener('click', () => this.showMainMenu());
         
-        // Power-up butonları
+        // Power-ups
         const freezeBtn = document.getElementById('freeze-btn');
         const doubleBtn = document.getElementById('double-btn');
         const magnetBtn = document.getElementById('magnet-btn');
@@ -161,14 +615,11 @@ class BubblePopGame {
         
         // Canvas etkileşimi
         if (this.canvas) {
-            // Mouse olayları
             this.canvas.addEventListener('click', (e) => this.handleCanvasClick(e));
             
-            // Touch olayları
             this.canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const touch = e.touches[0];
-                const rect = this.canvas.getBoundingClientRect();
                 const clickEvent = new MouseEvent('click', {
                     clientX: touch.clientX,
                     clientY: touch.clientY
@@ -177,7 +628,7 @@ class BubblePopGame {
             }, {passive: false});
         }
         
-        // Keyboard kısayolları
+        // Keyboard
         document.addEventListener('keydown', (e) => {
             if (this.gameState === 'playing' && e.code === 'Space') {
                 e.preventDefault();
@@ -186,10 +637,7 @@ class BubblePopGame {
         });
     }
     
-    // =========================
-    // EKRAN YÖNETİMİ
-    // =========================
-    
+    // Ekran yönetimi
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.add('hidden');
@@ -216,24 +664,17 @@ class BubblePopGame {
         console.log('📚 Tutorial gösteriliyor');
     }
     
-    hideTutorial() {
-        this.showMainMenu();
-    }
-    
-    showAchievements() {
-        alert('🏆 Başarılar sistemi yakında gelecek!\n\n🎯 Mevcut seviye sistemi:\n• Seviye ' + this.level + ': ' + (this.levelSettings[this.level]?.name || 'Efsane') + '\n• En yüksek puan: ' + this.highScore);
-        console.log('🏆 Başarılar gösteriliyor');
-    }
-    
     showSettings() {
-        alert('⚙️ Ayarlar menüsü yakında gelecek!\n\n🎮 Mevcut ayarlar:\n• Seviye atlama: Aktif\n• Dinamik zorluk: Açık\n• Ses efektleri: Konsol');
+        this.showScreen('settings-screen');
         console.log('⚙️ Ayarlar gösteriliyor');
     }
     
-    // =========================
-    // QR KOD FONKSİYONLARI
-    // =========================
+    showAchievements() {
+        const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+        alert('🏆 ' + (LANG.achievements || 'Başarılar') + ' sistemi yakında gelecek!\n\n🎯 Mevcut seviye: ' + this.level + '\n• En yüksek puan: ' + this.highScore);
+    }
     
+    // QR Modal
     showQRModal() {
         console.log('📱 QR Modal açılıyor');
         this.generateQRCode();
@@ -265,7 +706,7 @@ class BubblePopGame {
                      alt="QR Kod - Bubble Pop Mania" 
                      style="width: 100%; height: 100%; border-radius: 7px;"
                      onload="console.log('✅ QR kod yüklendi')"
-                     onerror="console.log('❌ QR kod hatası'); this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div style="display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; color: #666; text-align: center;">
                     <div style="font-size: 2rem; margin-bottom: 10px;">📱</div>
                     <div>QR Kod yüklenemedi</div>
@@ -274,8 +715,6 @@ class BubblePopGame {
                 </div>
             `;
         }
-        
-        console.log('📱 QR kod oluşturuldu:', gameURL);
     }
     
     copyGameURL() {
@@ -297,7 +736,6 @@ class BubblePopGame {
             }
         } catch (err) {
             console.error('Kopyalama hatası:', err);
-            this.showNotification('❌ Kopyalama başarısız. Lütfen manuel olarak seçip kopyala.');
         }
     }
     
@@ -307,13 +745,10 @@ class BubblePopGame {
             this.showCopySuccess();
         } catch (err) {
             console.error('Fallback kopyalama hatası:', err);
-            this.showNotification('❌ Kopyalama başarısız. URL\'i manuel seç ve Ctrl+C ile kopyala.');
         }
     }
     
     showCopySuccess() {
-        this.showNotification('📋 Link kopyalandı!');
-        
         const btn = document.getElementById('copy-url-btn');
         if (btn) {
             const originalText = btn.innerHTML;
@@ -329,157 +764,79 @@ class BubblePopGame {
     
     shareToWhatsApp() {
         const gameURL = document.getElementById('game-url')?.value || window.location.href;
-        const text = encodeURIComponent(`🫧 Bubble Pop Mania - Süper eğlenceli balon patlatma oyunu! 
-
-${this.score > 0 ? `En son ${this.score} puan yaptım! Seviye ${this.level}! ` : ''}Sen de oyna ve puanını paylaş! 🎯
-
-${gameURL}`);
+        const text = encodeURIComponent(`🫧 Bubble Pop Mania - Harika oyun! ${this.score > 0 ? `${this.score} puan yaptım! ` : ''}🎯 ${gameURL}`);
         
         const whatsappURL = `https://wa.me/?text=${text}`;
         window.open(whatsappURL, '_blank');
-        
-        console.log('📲 WhatsApp paylaşımı');
     }
     
     shareToTelegram() {
         const gameURL = document.getElementById('game-url')?.value || window.location.href;
-        const text = encodeURIComponent(`🫧 Bubble Pop Mania - Harika bir balon patlatma oyunu! ${gameURL}`);
+        const text = encodeURIComponent(`🫧 Bubble Pop Mania ${gameURL}`);
         
         const telegramURL = `https://t.me/share/url?url=${encodeURIComponent(gameURL)}&text=${text}`;
         window.open(telegramURL, '_blank');
-        
-        console.log('✈️ Telegram paylaşımı');
     }
     
     shareToTwitter() {
         const gameURL = document.getElementById('game-url')?.value || window.location.href;
-        const text = encodeURIComponent(`🫧 Bubble Pop Mania oynuyorum! ${this.score > 0 ? `${this.score} puan yaptım! Seviye ${this.level}! ` : ''}Çok bağımlılık yapıyor! 🎯 #BubblePopMania #TürkOyunu`);
+        const text = encodeURIComponent(`🫧 Bubble Pop Mania oynuyorum! 🎯 #BubblePopMania`);
         
         const twitterURL = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(gameURL)}`;
         window.open(twitterURL, '_blank');
-        
-        console.log('🐦 Twitter paylaşımı');
     }
     
-    // =========================
-    // SEVİYE SİSTEMİ - YENİ!
-    // =========================
-    
+    // Seviye sistemi
     checkLevelUp() {
         const oldLevel = this.level;
-        let newLevel = this.level;
         
-        // Seviye geçiş tablosu
-        const levelThresholds = [
-            { level: 1, score: 0 },
-            { level: 2, score: 500 },
-            { level: 3, score: 1500 },
-            { level: 4, score: 3000 },
-            { level: 5, score: 5000 },
-            { level: 6, score: 8000 },
-            { level: 7, score: 12000 },
-            { level: 8, score: 18000 },
-            { level: 9, score: 25000 },
-            { level: 10, score: 35000 }
-        ];
-        
-        // Mevcut seviyeyi belirle
-        for (let i = levelThresholds.length - 1; i >= 0; i--) {
-            if (this.score >= levelThresholds[i].score) {
-                newLevel = levelThresholds[i].level;
-                break;
-            }
+        if (this.score >= 500 && this.level === 1) {
+            this.level = 2;
+        } else if (this.score >= 1500 && this.level === 2) {
+            this.level = 3;
+        } else if (this.score >= 3000 && this.level === 3) {
+            this.level = 4;
+        } else if (this.score >= 5000 && this.level === 4) {
+            this.level = 5;
+        } else if (this.score >= 8000 && this.level >= 5) {
+            this.level = Math.min(10, Math.floor(this.score / 2000));
         }
         
-        // 10. seviyeden sonra her 15000 puanda bir seviye
-        if (this.score >= 35000) {
-            newLevel = Math.floor((this.score - 35000) / 15000) + 10;
-            newLevel = Math.min(newLevel, 50); // Maksimum 50. seviye
-        }
-        
-        // Seviye atlama oldu mu?
-        if (newLevel > oldLevel) {
-            this.level = newLevel;
-            this.onLevelUp(oldLevel, newLevel);
+        if (this.level > oldLevel) {
+            this.onLevelUp(oldLevel, this.level);
         }
     }
     
     onLevelUp(oldLevel, newLevel) {
         console.log(`🎉 LEVEL UP! ${oldLevel} → ${newLevel}!`);
         
-        // Seviye ayarlarını güncelle
         this.updateLevelSettings();
-        
-        // Görsel efektler
         this.showLevelUpEffect(newLevel);
         this.createLevelUpParticles();
         
-        // Ses efekti (konsol için)
-        console.log('🎵 *LEVEL UP SOUND EFFECT*');
-        
-        // Başarı bildirimi
-        const levelName = this.levelSettings[newLevel]?.name || `Seviye ${newLevel}`;
-        this.showNotification(`🎉 ${levelName} seviyesine çıktın! 🚀 Oyun hızlandı!`);
-        
-        // Level up transition efekti
-        this.createLevelTransition(oldLevel, newLevel);
+        console.log('🎵 *LEVEL UP SOUND*');
     }
     
     updateLevelSettings() {
         const settings = this.getCurrentLevelSettings();
-        
-        // Spawn delay güncelle
         this.spawnDelay = settings.spawnDelay;
         
-        // Mevcut balonların hızını oransal artır
-        const prevSettings = this.levelSettings[this.level - 1] || this.levelSettings[1];
-        const speedIncrease = settings.speedMultiplier / prevSettings.speedMultiplier;
-        
-        this.bubbles.forEach(bubble => {
-            bubble.speed *= speedIncrease;
-        });
-        
-        console.log(`⚙️ Seviye ${this.level} ayarları aktive edildi:`, settings);
+        console.log(`⚙️ Seviye ${this.level} ayarları:`, settings);
     }
     
     getCurrentLevelSettings() {
-        // Tanımlı seviyeler için ayarları al
-        if (this.levelSettings[this.level]) {
-            return this.levelSettings[this.level];
-        }
-        
-        // 10+ seviyeler için dinamik ayarlar
-        const baseSettings = this.levelSettings[10];
-        const extraLevels = this.level - 10;
-        
-        return {
-            speedMultiplier: baseSettings.speedMultiplier + (extraLevels * 0.2),
-            spawnDelay: Math.max(300, baseSettings.spawnDelay - (extraLevels * 20)),
-            maxBubbles: baseSettings.maxBubbles + Math.floor(extraLevels / 2),
-            rareChance: Math.min(0.8, baseSettings.rareChance + (extraLevels * 0.05)),
-            bgColor: this.generateDynamicColor(extraLevels),
-            name: `Seviye ${this.level}`
-        };
-    }
-    
-    generateDynamicColor(extraLevels) {
-        // Yüksek seviyeler için dinamik renk üretimi
-        const colors = ['#000020', '#200040', '#400060', '#600080', '#8000A0', '#A000C0'];
-        return colors[extraLevels % colors.length] || '#000020';
+        return this.levelSettings[this.level] || this.levelSettings[5];
     }
     
     showLevelUpEffect(newLevel) {
-        const levelName = this.getCurrentLevelSettings().name;
-        
         this.levelUpEffects.push({
             text: `LEVEL ${newLevel}!`,
-            subText: levelName,
             x: this.canvas.width / 2,
             y: this.canvas.height / 2 - 30,
             scale: 0.5,
             opacity: 1,
-            life: 3000,
-            maxLife: 3000
+            life: 2500,
+            maxLife: 2500
         });
     }
     
@@ -487,31 +844,20 @@ ${gameURL}`);
         const centerX = this.canvas.width / 2;
         const centerY = this.canvas.height / 2;
         
-        // Altın parçacık patlaması
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 15; i++) {
             this.particles.push({
-                x: centerX + (Math.random() - 0.5) * 100,
-                y: centerY + (Math.random() - 0.5) * 100,
-                vx: (Math.random() - 0.5) * 10,
-                vy: (Math.random() - 0.5) * 10 - 3,
-                size: 3 + Math.random() * 6,
-                color: Math.random() < 0.5 ? '#FFD700' : '#FF8C00',
-                life: 1500 + Math.random() * 1000
+                x: centerX + (Math.random() - 0.5) * 80,
+                y: centerY + (Math.random() - 0.5) * 80,
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 0.5) * 6 - 2,
+                size: 3 + Math.random() * 4,
+                color: '#FFD700',
+                life: 1200 + Math.random() * 800
             });
         }
     }
     
-    createLevelTransition(oldLevel, newLevel) {
-        this.levelTransitions.push({
-            oldLevel: oldLevel,
-            newLevel: newLevel,
-            progress: 0,
-            duration: 2000
-        });
-    }
-    
     updateLevelUpEffects(deltaTime) {
-        // Level up text efektleri
         for (let i = this.levelUpEffects.length - 1; i >= 0; i--) {
             const effect = this.levelUpEffects[i];
             effect.life -= deltaTime;
@@ -519,37 +865,23 @@ ${gameURL}`);
             const progress = 1 - (effect.life / effect.maxLife);
             
             if (progress < 0.3) {
-                effect.scale = 0.5 + (progress / 0.3) * 1.5; // 0.5 → 2.0
+                effect.scale = 0.5 + (progress / 0.3) * 1.5;
             } else if (progress < 0.7) {
-                effect.scale = 2.0; // Sabit büyüklük
+                effect.scale = 2.0;
             } else {
-                effect.opacity = (1 - progress) / 0.3; // Solma
+                effect.opacity = (1 - progress) / 0.3;
             }
             
             if (effect.life <= 0) {
                 this.levelUpEffects.splice(i, 1);
             }
         }
-        
-        // Seviye geçiş efektleri
-        for (let i = this.levelTransitions.length - 1; i >= 0; i--) {
-            const transition = this.levelTransitions[i];
-            transition.progress += deltaTime / transition.duration;
-            
-            if (transition.progress >= 1) {
-                this.levelTransitions.splice(i, 1);
-            }
-        }
     }
     
-    // =========================
-    // OYUN MekaniKLERİ  
-    // =========================
-    
+    // Oyun mekaniği
     startGame() {
         console.log('🎯 Yeni oyun başlıyor...');
         
-        // Oyun durumunu resetle
         this.gameState = 'playing';
         this.score = 0;
         this.combo = 1;
@@ -560,11 +892,9 @@ ${gameURL}`);
         this.bubbles = [];
         this.particles = [];
         this.levelUpEffects = [];
-        this.levelTransitions = [];
         this.spawnTimer = 0;
-        this.spawnDelay = 2000;
+        this.spawnDelay = 2500;
         
-        // Power-upları resetle
         Object.keys(this.powerUps).forEach(key => {
             this.powerUps[key] = false;
         });
@@ -572,11 +902,9 @@ ${gameURL}`);
         this.showScreen('game-screen');
         this.updateUI();
         
-        // İlk balonları oluştur
         this.createBubble();
         this.createBubble();
         
-        // Oyun döngüsünü başlat
         this.gameLoop(performance.now());
     }
     
@@ -586,7 +914,6 @@ ${gameURL}`);
         console.log('⏸️ Oyun duraklatıldı');
         this.gameState = 'paused';
         
-        // Pause stats güncelle
         document.getElementById('pause-score').textContent = this.score;
         document.getElementById('pause-combo').textContent = this.combo + 'x';
         document.getElementById('pause-lives').textContent = this.lives;
@@ -609,7 +936,6 @@ ${gameURL}`);
         this.gameState = 'gameover';
         this.totalGames++;
         
-        // High score kontrol
         let isNewRecord = false;
         if (this.score > this.highScore) {
             this.highScore = this.score;
@@ -619,7 +945,6 @@ ${gameURL}`);
         
         localStorage.setItem('totalGames', this.totalGames.toString());
         
-        // Game over UI güncelle
         document.getElementById('final-score').textContent = this.score;
         document.getElementById('best-combo').textContent = this.maxCombo + 'x';
         document.getElementById('final-level').textContent = this.level;
@@ -630,30 +955,28 @@ ${gameURL}`);
         
         if (isNewRecord && newRecordEl && titleEl) {
             newRecordEl.style.display = 'block';
-            titleEl.textContent = '🎉 YENİ REKOR!';
+            const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+            titleEl.textContent = LANG.newRecord || '🎉 YENİ REKOR!';
         } else if (titleEl) {
-            titleEl.textContent = '🎯 Oyun Bitti!';
+            const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+            titleEl.textContent = LANG.gameOver || '🎯 Oyun Bitti!';
             if (newRecordEl) newRecordEl.style.display = 'none';
         }
         
         this.showScreen('game-over');
-        
-        // Başarıları kontrol et
-        this.checkAchievements();
     }
     
     shareScore() {
-        const levelName = this.getCurrentLevelSettings().name;
-        const text = `🫧 Bubble Pop Mania'da ${this.score} puan yaptım! ${levelName} seviyesine ulaştım! ${this.maxCombo}x combo ile rekor kırdım! 🎯`;
+        const text = `🫧 Bubble Pop Mania'da ${this.score} puan yaptım! Seviye ${this.level}! 🎯`;
         const gameURL = document.getElementById('game-url')?.value || 'https://eyedeu.github.io/bubble-pop-mania';
         
         if (navigator.share) {
             navigator.share({
-                title: 'Bubble Pop Mania - Puanımı Paylaşıyorum!',
+                title: 'Bubble Pop Mania',
                 text: text,
                 url: gameURL
             }).then(() => {
-                console.log('📱 Native share başarılı');
+                console.log('📱 Paylaşım başarılı');
             }).catch(() => {
                 this.fallbackShare(text, gameURL);
             });
@@ -666,27 +989,20 @@ ${gameURL}`);
         const fullText = text + '\n' + gameURL;
         if (navigator.clipboard) {
             navigator.clipboard.writeText(fullText).then(() => {
-                this.showNotification('📋 Puanın kopyalandı! Sosyal medyada paylaşabilirsin.');
+                alert('📋 Puanın kopyalandı! Sosyal medyada paylaşabilirsin.');
             });
-        } else {
-            this.showNotification('📱 Puanını paylaşmak için yukarıdaki QR kodu kullan!');
         }
-        
-        console.log('📱 Puan paylaşıldı:', this.score);
     }
     
-    // =========================
-    // BALON YÖNETİMİ
-    // =========================
-    
+    // Balon yönetimi
     createBubble() {
         const settings = this.getCurrentLevelSettings();
         
         const bubble = {
             x: Math.random() * (this.canvas.width - 100) + 50,
             y: this.canvas.height + 30,
-            radius: 20 + Math.random() * 15,
-            speed: (0.8 + Math.random() * 0.4) * settings.speedMultiplier,
+            radius: 22 + Math.random() * 13, // 22-35 arası
+            speed: (0.9 + Math.random() * 0.4) * settings.speedMultiplier, // 0.9-1.3 * multiplier
             color: this.getRandomBubbleColor(),
             id: Date.now() + Math.random(),
             alive: true,
@@ -702,15 +1018,13 @@ ${gameURL}`);
     getRandomBubbleColor() {
         const settings = this.getCurrentLevelSettings();
         const rand = Math.random() * 100;
+        const rareBonus = settings.rareChance * 30;
         
-        // Yüksek seviyelerde nadir balonlar daha sık çıkar
-        const rareBonus = settings.rareChance * 50;
-        
-        if (rand < 35 - rareBonus) return this.bubbleTypes[0].color;      // Blue
-        if (rand < 65 - rareBonus) return this.bubbleTypes[1].color;      // Green 
-        if (rand < 85) return this.bubbleTypes[2].color;                  // Red
-        if (rand < 95 + rareBonus) return this.bubbleTypes[3].color;      // Gold - ARTIŞLI
-        return this.bubbleTypes[4].color;                                 // Purple - ARTIŞLI
+        if (rand < 40 - rareBonus) return this.bubbleTypes[0].color; // Blue
+        if (rand < 65 - rareBonus) return this.bubbleTypes[1].color; // Green
+        if (rand < 85) return this.bubbleTypes[2].color;             // Red
+        if (rand < 95 + rareBonus) return this.bubbleTypes[3].color; // Gold
+        return this.bubbleTypes[4].color;                            // Purple
     }
     
     getBubblePoints(color) {
@@ -728,7 +1042,6 @@ ${gameURL}`);
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
         
-        // En yakın balonu bul
         let targetBubble = null;
         let minDistance = Infinity;
         
@@ -736,7 +1049,7 @@ ${gameURL}`);
             if (!bubble.alive) continue;
             
             const distance = Math.sqrt((x - bubble.x) ** 2 + (y - bubble.y) ** 2);
-            if (distance <= bubble.radius + 10 && distance < minDistance) {
+            if (distance <= bubble.radius + 8 && distance < minDistance) {
                 minDistance = distance;
                 targetBubble = bubble;
             }
@@ -745,7 +1058,6 @@ ${gameURL}`);
         if (targetBubble) {
             this.popBubble(targetBubble);
         } else {
-            // Boş yere tıklama - combo reset
             this.combo = 1;
             this.updateUI();
             console.log('❌ Boş yere tıklandı - combo resetlendi');
@@ -758,7 +1070,6 @@ ${gameURL}`);
         bubble.alive = false;
         this.bubblesPopped++;
         
-        // Puan hesapla
         let points = bubble.points;
         if (this.powerUps.double) {
             points *= 2;
@@ -772,27 +1083,19 @@ ${gameURL}`);
             this.maxCombo = this.combo;
         }
         
-        // Balonu listeden kaldır
         const index = this.bubbles.indexOf(bubble);
         if (index > -1) {
             this.bubbles.splice(index, 1);
         }
         
-        // Parçacık efekti oluştur
         this.createParticles(bubble.x, bubble.y, bubble.color);
-        
-        // SEVİYE KONTROLÜ
         this.checkLevelUp();
-        
         this.updateUI();
         
-        console.log(`💥 Balon patladı! +${points} puan (${this.combo-1}x combo) | Seviye: ${this.level}`);
+        console.log(`💥 +${points} puan! (${this.combo-1}x combo)`);
     }
     
-    // =========================  
-    // OYUN DÖNGÜSÜ
-    // =========================
-    
+    // Oyun döngüsü
     gameLoop(currentTime) {
         if (this.gameState !== 'playing') return;
         
@@ -801,20 +1104,17 @@ ${gameURL}`);
         
         const settings = this.getCurrentLevelSettings();
         
-        // Balon spawn - seviye bazlı hız ve sayı
+        // Balon spawn
         this.spawnTimer += deltaTime;
         if (this.spawnTimer >= this.spawnDelay && this.bubbles.length < settings.maxBubbles) {
             this.createBubble();
             this.spawnTimer = 0;
             
             // Yüksek seviyede ek balon şansı
-            if (this.level > 3 && Math.random() < 0.4) {
+            if (this.level > 2 && Math.random() < 0.25) {
                 this.createBubble();
             }
-            if (this.level > 6 && Math.random() < 0.3) {
-                this.createBubble();
-            }
-            if (this.level > 9 && Math.random() < 0.2) {
+            if (this.level > 4 && Math.random() < 0.15) {
                 this.createBubble();
             }
         }
@@ -834,12 +1134,11 @@ ${gameURL}`);
             const bubble = this.bubbles[i];
             if (!bubble.alive) continue;
             
-            // Hareket
             let speed = bubble.speed;
-            if (this.powerUps.freeze) speed *= 0.2; // Dondurma efekti
+            if (this.powerUps.freeze) speed *= 0.25;
             
             bubble.y -= speed;
-            bubble.pulsePhase += 0.05; // Nabız efekti
+            bubble.pulsePhase += 0.04;
             
             // Mıknatıs efekti
             if (this.powerUps.magnet) {
@@ -849,9 +1148,9 @@ ${gameURL}`);
                 const dy = centerY - bubble.y;
                 const distance = Math.sqrt(dx*dx + dy*dy);
                 
-                if (distance > 50) {
-                    bubble.x += (dx / distance) * 0.5;
-                    bubble.y += (dy / distance) * 0.5;
+                if (distance > 40) {
+                    bubble.x += (dx / distance) * 0.4;
+                    bubble.y += (dy / distance) * 0.4;
                 }
             }
             
@@ -859,7 +1158,7 @@ ${gameURL}`);
             if (bubble.y + bubble.radius < -50) {
                 this.bubbles.splice(i, 1);
                 this.lives--;
-                this.combo = 1; // Combo reset
+                this.combo = 1;
                 
                 if (this.lives <= 0) {
                     this.gameOver();
@@ -874,7 +1173,7 @@ ${gameURL}`);
         // Otomatik power-up
         if (this.powerUps.auto) {
             for (let bubble of this.bubbles) {
-                if (bubble.alive && Math.random() < 0.02) { // %2 şans
+                if (bubble.alive && Math.random() < 0.015) {
                     this.popBubble(bubble);
                     break;
                 }
@@ -889,7 +1188,7 @@ ${gameURL}`);
             
             particle.x += particle.vx;
             particle.y += particle.vy;
-            particle.vy += 0.1; // Yerçekimi
+            particle.vy += 0.08; // Yerçekimi
             
             if (particle.life <= 0) {
                 this.particles.splice(i, 1);
@@ -898,24 +1197,16 @@ ${gameURL}`);
     }
     
     updatePowerUps(deltaTime) {
-        // Power-up süre yönetimi burada olacak
+        // Power-up süre yönetimi
     }
     
-    // =========================
-    // RENDER FONKSİYONLARI
-    // =========================
-    
+    // Render
     render() {
         if (!this.ctx) return;
         
-        // Temizle
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Arka plan - seviye bazlı
         this.drawBackground();
-        
-        // Seviye geçiş efektleri
-        this.drawLevelTransitions();
         
         // Balonları çiz
         for (let bubble of this.bubbles) {
@@ -929,45 +1220,41 @@ ${gameURL}`);
             this.drawParticle(particle);
         }
         
-        // Seviye atlama efektleri çiz
+        // Level up efektleri
         this.drawLevelUpEffects();
         
-        // Power-up efektlerini çiz
+        // Power-up efektleri
         this.drawPowerUpEffects();
     }
     
     drawBackground() {
         const settings = this.getCurrentLevelSettings();
         
-        // Seviye bazlı gradient arka plan
+        // Seviye bazlı gradient
         const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
         gradient.addColorStop(0, settings.bgColor);
-        gradient.addColorStop(0.5, this.lightenColor(settings.bgColor, 15));
-        gradient.addColorStop(1, this.lightenColor(settings.bgColor, 30));
+        gradient.addColorStop(0.5, this.lightenColor(settings.bgColor, 12));
+        gradient.addColorStop(1, this.lightenColor(settings.bgColor, 25));
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Seviye göstergesi (arka plan üzerinde)
+        // Seviye göstergesi
         this.ctx.save();
-        this.ctx.globalAlpha = 0.3;
-        this.ctx.font = 'bold 24px Arial';
+        this.ctx.globalAlpha = 0.25;
+        this.ctx.font = 'bold 20px Arial';
         this.ctx.fillStyle = '#ffffff';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText(`LEVEL ${this.level}`, this.canvas.width / 2, 40);
-        
-        const levelName = settings.name;
-        this.ctx.font = '12px Arial';
-        this.ctx.fillText(levelName, this.canvas.width / 2, 60);
+        this.ctx.fillText(`LEVEL ${this.level}`, this.canvas.width / 2, 35);
         this.ctx.restore();
         
-        // Dekoratif arka plan efektleri (seviye bazlı yoğunluk)
+        // Dekoratif arka plan
         this.ctx.save();
-        this.ctx.globalAlpha = Math.min(0.1, 0.05 + this.level * 0.01);
-        for (let i = 0; i < Math.min(5, this.level); i++) {
-            const x = (i + 1) * this.canvas.width / 6;
-            const y = this.canvas.height - 100 + Math.sin(performance.now() * 0.001 + i) * 30;
-            const size = 20 + Math.sin(performance.now() * 0.002 + i) * 10;
+        this.ctx.globalAlpha = Math.min(0.08, 0.04 + this.level * 0.008);
+        for (let i = 0; i < Math.min(4, this.level); i++) {
+            const x = (i + 1) * this.canvas.width / 5;
+            const y = this.canvas.height - 120 + Math.sin(performance.now() * 0.001 + i) * 25;
+            const size = 18 + Math.sin(performance.now() * 0.0015 + i) * 8;
             
             this.ctx.beginPath();
             this.ctx.arc(x, y, size, 0, Math.PI * 2);
@@ -978,21 +1265,21 @@ ${gameURL}`);
     }
     
     drawBubble(bubble) {
-        const pulse = 1 + Math.sin(bubble.pulsePhase) * 0.1;
+        const pulse = 1 + Math.sin(bubble.pulsePhase) * 0.08;
         const radius = bubble.radius * pulse;
         
         this.ctx.save();
         
-        // Seviye bazlı glow efekti
-        if (this.level > 5) {
+        // Seviye bazlı glow
+        if (this.level > 3) {
             this.ctx.shadowColor = bubble.color;
-            this.ctx.shadowBlur = 10;
+            this.ctx.shadowBlur = 8;
         }
         
         // Gölge
         this.ctx.beginPath();
-        this.ctx.arc(bubble.x + 3, bubble.y + 3, radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+        this.ctx.arc(bubble.x + 2, bubble.y + 2, radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
         this.ctx.fill();
         
         // Ana balon
@@ -1003,25 +1290,25 @@ ${gameURL}`);
         
         // Parlaklık efekti
         this.ctx.beginPath();
-        this.ctx.arc(bubble.x - radius * 0.3, bubble.y - radius * 0.3, radius * 0.4, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        this.ctx.arc(bubble.x - radius * 0.25, bubble.y - radius * 0.25, radius * 0.35, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         this.ctx.fill();
         
         // Kenarlık
         this.ctx.beginPath();
         this.ctx.arc(bubble.x, bubble.y, radius, 0, Math.PI * 2);
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        this.ctx.lineWidth = 1.5;
         this.ctx.stroke();
         
-        // Puan gösterimi (altın ve elmas için)
+        // Puan gösterimi
         if (bubble.points >= 10) {
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
-            this.ctx.font = 'bold ' + Math.round(radius * 0.4) + 'px Arial';
+            this.ctx.font = 'bold ' + Math.round(radius * 0.35) + 'px Arial';
             this.ctx.fillStyle = 'white';
-            this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-            this.ctx.lineWidth = 2;
+            this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
+            this.ctx.lineWidth = 1.5;
             this.ctx.strokeText(bubble.points.toString(), bubble.x, bubble.y);
             this.ctx.fillText(bubble.points.toString(), bubble.x, bubble.y);
         }
@@ -1046,68 +1333,39 @@ ${gameURL}`);
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
             
-            // Ana yazı
-            this.ctx.font = `bold ${Math.round(40 * effect.scale)}px Arial`;
+            this.ctx.font = `bold ${Math.round(35 * effect.scale)}px Arial`;
             this.ctx.fillStyle = '#FFD700';
             this.ctx.strokeStyle = '#FF8C00';
-            this.ctx.lineWidth = 4;
+            this.ctx.lineWidth = 3;
             this.ctx.shadowColor = '#000000';
-            this.ctx.shadowBlur = 10;
+            this.ctx.shadowBlur = 8;
             
             this.ctx.strokeText(effect.text, effect.x, effect.y);
             this.ctx.fillText(effect.text, effect.x, effect.y);
             
-            // Alt yazı
-            if (effect.subText) {
-                this.ctx.font = `bold ${Math.round(20 * effect.scale)}px Arial`;
-                this.ctx.fillStyle = '#FFA500';
-                this.ctx.strokeStyle = '#FF4500';
-                this.ctx.lineWidth = 2;
-                
-                this.ctx.strokeText(effect.subText, effect.x, effect.y + 50);
-                this.ctx.fillText(effect.subText, effect.x, effect.y + 50);
-            }
-            
-            this.ctx.restore();
-        }
-    }
-    
-    drawLevelTransitions() {
-        for (let transition of this.levelTransitions) {
-            // Seviye geçiş efekti (ışık animasyonu vb.)
-            this.ctx.save();
-            const alpha = Math.sin(transition.progress * Math.PI) * 0.3;
-            this.ctx.globalAlpha = alpha;
-            this.ctx.fillStyle = '#FFD700';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.restore();
         }
     }
     
     drawPowerUpEffects() {
-        // Power-up efektlerini çiz
         if (this.powerUps.freeze) {
             this.ctx.save();
-            this.ctx.globalAlpha = 0.3;
+            this.ctx.globalAlpha = 0.2;
             this.ctx.fillStyle = '#87CEEB';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.restore();
         }
         
         if (this.powerUps.double) {
-            // Altın parlama efekti
             this.ctx.save();
-            this.ctx.globalAlpha = 0.1 + Math.sin(performance.now() * 0.01) * 0.05;
+            this.ctx.globalAlpha = 0.08 + Math.sin(performance.now() * 0.008) * 0.04;
             this.ctx.fillStyle = '#FFD700';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.restore();
         }
     }
     
-    // =========================
-    // YARDIMCI FONKSİYONLAR
-    // =========================
-    
+    // Yardımcı fonksiyonlar
     lightenColor(color, percent) {
         const num = parseInt(color.replace("#", ""), 16);
         const amt = Math.round(2.55 * percent);
@@ -1126,17 +1384,19 @@ ${gameURL}`);
             this.particles.push({
                 x: x,
                 y: y,
-                vx: (Math.random() - 0.5) * 4,
-                vy: (Math.random() - 0.5) * 4 - 2,
-                size: 2 + Math.random() * 3,
+                vx: (Math.random() - 0.5) * 3.5,
+                vy: (Math.random() - 0.5) * 3.5 - 1.5,
+                size: 2 + Math.random() * 2.5,
                 color: color,
-                life: 500 + Math.random() * 500
+                life: 450 + Math.random() * 450
             });
         }
     }
     
     activatePowerUp(type) {
         if (this.gameState !== 'playing') return;
+        
+        const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
         
         console.log('⚡ Power-up aktive:', type);
         
@@ -1146,7 +1406,7 @@ ${gameURL}`);
                 setTimeout(() => {
                     this.powerUps.freeze = false;
                 }, 5000);
-                this.showNotification('🧊 Dondurma aktif! 5 saniye');
+                console.log('🧊 ' + (LANG.freeze || 'Dondur') + ' aktif!');
                 break;
                 
             case 'double':
@@ -1154,7 +1414,7 @@ ${gameURL}`);
                 setTimeout(() => {
                     this.powerUps.double = false;
                 }, 10000);
-                this.showNotification('⭐ 2x Puan aktif! 10 saniye');
+                console.log('⭐ ' + (LANG.double || '2x Puan') + ' aktif!');
                 break;
                 
             case 'magnet':
@@ -1162,7 +1422,7 @@ ${gameURL}`);
                 setTimeout(() => {
                     this.powerUps.magnet = false;
                 }, 8000);
-                this.showNotification('🧲 Mıknatıs aktif! 8 saniye');
+                console.log('🧲 ' + (LANG.magnet || 'Mıknatıs') + ' aktif!');
                 break;
                 
             case 'auto':
@@ -1170,73 +1430,21 @@ ${gameURL}`);
                 setTimeout(() => {
                     this.powerUps.auto = false;
                 }, 15000);
-                this.showNotification('🤖 Otomatik aktif! 15 saniye');
+                console.log('🤖 ' + (LANG.auto || 'Otomatik') + ' aktif!');
                 break;
         }
     }
     
-    showNotification(message) {
-        console.log('📢', message);
-        
-        // Basit notification sistemi
-        if (window.Notification && Notification.permission === 'granted') {
-            new Notification('Bubble Pop Mania', {
-                body: message,
-                icon: 'icon-192.png'
-            });
-        }
-    }
-    
-    checkAchievements() {
-        // Gelişmiş başarı sistemi
-        const achievements = [
-            {id: 'first_bubble', condition: this.bubblesPopped >= 1, title: 'İlk Balon', desc: 'İlk balonu patlattın!', points: 10},
-            {id: 'bubble_master', condition: this.bubblesPopped >= 50, title: 'Balon Ustası', desc: '50 balon patlattın!', points: 100},
-            {id: 'combo_king', condition: this.maxCombo >= 20, title: 'Combo Kralı', desc: '20x combo yaptın!', points: 200},
-            {id: 'level_5', condition: this.level >= 5, title: 'Uzman', desc: '5. seviyeye ulaştın!', points: 150},
-            {id: 'level_10', condition: this.level >= 10, title: 'Efsane', desc: '10. seviyeye ulaştın!', points: 500},
-            {id: 'high_score', condition: this.score >= 10000, title: 'Puan Avcısı', desc: '10.000 puan yaptın!', points: 300},
-        ];
-        
-        for (let achievement of achievements) {
-            const storageKey = `achievement_${achievement.id}`;
-            if (achievement.condition && !localStorage.getItem(storageKey)) {
-                localStorage.setItem(storageKey, 'true');
-                this.showAchievement(achievement.title, achievement.desc, achievement.points);
-            }
-        }
-    }
-    
-    showAchievement(title, desc, points) {
-        const popup = document.getElementById('achievement-popup');
-        const titleEl = document.getElementById('achievement-title');
-        const descEl = document.getElementById('achievement-desc');
-        const pointsEl = document.getElementById('achievement-points');
-        
-        if (titleEl) titleEl.textContent = title;
-        if (descEl) descEl.textContent = desc;
-        if (pointsEl) pointsEl.textContent = `+${points}`;
-        
-        if (popup) {
-            popup.classList.remove('hidden');
-            setTimeout(() => {
-                popup.classList.add('hidden');
-            }, 3000);
-        }
-        
-        console.log('🏆 Başarı kazanıldı:', title, '-', desc);
-    }
-    
     updateUI() {
-        // Skorları güncelle
         const elements = {
-            'current-score': this.score.toLocaleString(), // Binlik ayracı ile
+            'current-score': this.score.toLocaleString(),
             'current-combo': this.combo + 'x',
             'current-level': this.level,
             'current-lives': this.lives,
             'high-score': this.highScore.toLocaleString(),
             'total-games': this.totalGames,
-            'daily-streak': 1
+            'daily-streak': 1,
+            'energy-text': this.lives + '/5'
         };
         
         for (let [id, value] of Object.entries(elements)) {
@@ -1244,15 +1452,12 @@ ${gameURL}`);
             if (el) el.textContent = value;
         }
         
-        // Energy bar güncelle
+        // Energy bar renk
         const energyFill = document.getElementById('energy-fill');
-        const energyText = document.getElementById('energy-text');
-        if (energyFill && energyText) {
+        if (energyFill) {
             const energyPercent = (this.lives / 5) * 100;
             energyFill.style.width = energyPercent + '%';
-            energyText.textContent = this.lives + '/5';
             
-            // Renk değişimi
             if (this.lives <= 1) {
                 energyFill.style.background = 'linear-gradient(90deg, #EF4444, #DC2626)';
             } else if (this.lives <= 2) {
@@ -1262,29 +1467,46 @@ ${gameURL}`);
             }
         }
         
-        // Combo rengi (dinamik)
+        // Combo rengi
         const comboEl = document.getElementById('current-combo');
         if (comboEl) {
-            if (this.combo >= 20) {
-                comboEl.style.color = '#8B5CF6'; // Mor
-                comboEl.style.textShadow = '0 0 10px #8B5CF6';
-            } else if (this.combo >= 10) {
-                comboEl.style.color = '#F59E0B'; // Altın
-                comboEl.style.textShadow = '0 0 5px #F59E0B';
-            } else if (this.combo >= 5) {
-                comboEl.style.color = '#EF4444'; // Kırmızı
+            if (this.combo >= 15) {
+                comboEl.style.color = '#8B5CF6';
+                comboEl.style.textShadow = '0 0 8px #8B5CF6';
+            } else if (this.combo >= 8) {
+                comboEl.style.color = '#F59E0B';
+                comboEl.style.textShadow = '0 0 4px #F59E0B';
+            } else if (this.combo >= 4) {
+                comboEl.style.color = '#EF4444';
                 comboEl.style.textShadow = 'none';
             } else {
-                comboEl.style.color = '#3B82F6'; // Mavi
+                comboEl.style.color = '#3B82F6';
                 comboEl.style.textShadow = 'none';
             }
         }
     }
 }
 
-// Oyunu başlat
+// Başlat
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 DOM yüklendi, gelişmiş oyun oluşturuluyor...');
+    console.log('🚀 DOM yüklendi, geliştirilmiş çoklu dil oyunu oluşturuluyor...');
+    
+    // Dil seçici
+    const langSelect = document.getElementById('language-select');
+    if (langSelect) {
+        langSelect.value = CURRENT_LANG;
+        langSelect.addEventListener('change', (e) => {
+            CURRENT_LANG = e.target.value;
+            localStorage.setItem('gameLang', CURRENT_LANG);
+            updateLanguageTexts();
+            console.log('🌍 Dil değiştirildi:', CURRENT_LANG);
+        });
+    }
+    
+    // İlk dil güncellemesi
+    updateLanguageTexts();
+    
+    // Oyunu başlat
     window.game = new BubblePopGame();
 });
 
