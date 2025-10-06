@@ -4,13 +4,13 @@
   "description": "Türkiye'nin en bağımlılık yapan balon patlatma oyunu",
   "main": "index.html",
   "scripts": {
-    "start": "http-server -p 8000 .",
+    "start": "http-server -p 8000",
     "build": "echo 'Build complete'",
-    "dev": "http-server -p 8000 ."
+    "dev": "http-server -p 8000"
   },
   "keywords": [
     "game",
-    "mobile", 
+    "mobile",
     "bubble",
     "pop",
     "turkish",
@@ -19,9 +19,7 @@
   "author": "Eyedeu",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {
-    "http-server": "^14.1.1"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=14.0.0"
   }
