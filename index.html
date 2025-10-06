@@ -2,20 +2,50 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Pop Mania - Milyonlarca Oyuncunun Favorisi!</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bubble Pop Mania - Milyonların Favorisi</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu! Milyonlarca oyuncunun favorisi.">
+    <meta name="keywords" content="oyun, balon patlatma, bubble pop, mobile game, turkish game, bağımlılık yapan oyun">
+    <meta name="author" content="Eyedeu">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Bubble Pop Mania - Milyonların Favorisi">
+    <meta property="og:description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eyedeu.github.io/bubble-pop-mania/">
+    <meta property="og:image" content="icon-512.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bubble Pop Mania - Milyonların Favorisi">
+    <meta name="twitter:description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu!">
+    <meta name="twitter:image" content="icon-512.png">
+    
     <!-- PWA Meta Tags -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3B82F6">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Bubble Pop Mania">
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<!-- Mobile optimization -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3B82F6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bubble Pop Mania">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    
+    <!-- Mobile Optimization -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="app.js" as="script">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Ana Menü -->
@@ -58,190 +88,242 @@
                 </div>
                 <div class="tutorial-step">
                     <span class="step-number">3</span>
-                    <p>Combo yap ve çarpanları artır! 🔥</p>
+                    <p>Combo yaparak çok daha fazla puan kazan! 🔥</p>
                 </div>
             </div>
-            <button class="btn btn--primary" id="start-tutorial">Başla</button>
+            <button class="btn btn--primary" id="start-tutorial">Başla!</button>
+            <button class="btn btn--secondary" id="skip-tutorial">Atla</button>
         </div>
     </div>
 
     <!-- Oyun Ekranı -->
     <div id="game-screen" class="screen hidden">
-        <!-- UI Panel -->
-        <div class="game-ui">
-            <div class="ui-top">
-                <div class="score-container">
-                    <span class="label">Puan:</span>
-                    <span id="score">0</span>
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="score">
+                    <span class="score-label">Puan:</span>
+                    <span id="current-score">0</span>
                 </div>
-                <div class="combo-container">
-                    <span class="label">Combo:</span>
-                    <span id="combo">1x</span>
-                </div>
-                <div class="level-container">
-                    <span class="label">Seviye:</span>
-                    <span id="level">1</span>
+                <div class="combo">
+                    <span class="combo-label">Combo:</span>
+                    <span id="current-combo">1x</span>
                 </div>
             </div>
             
-            <div class="ui-bottom">
-                <div class="lives-container">
-                    <span class="label">❤️ Canlar:</span>
-                    <div id="lives-display"></div>
+            <div class="hud-right">
+                <div class="level">
+                    <span class="level-label">Seviye:</span>
+                    <span id="current-level">1</span>
                 </div>
-                
-                <div class="powerups-container">
-                    <button class="powerup-btn" data-powerup="freeze">⏰</button>
-                    <button class="powerup-btn" data-powerup="double">✨</button>
-                    <button class="powerup-btn" data-powerup="magnet">🧲</button>
-                    <button class="powerup-btn" data-powerup="auto">🤖</button>
+                <div class="lives">
+                    <span class="lives-label">❤️</span>
+                    <span id="current-lives">5</span>
                 </div>
             </div>
         </div>
 
         <!-- Oyun Alanı -->
-        <div id="game-area">
-            <canvas id="game-canvas"></canvas>
+        <div id="game-area" class="game-area">
+            <canvas id="game-canvas" width="400" height="600"></canvas>
+        </div>
+
+        <!-- Power-ups -->
+        <div class="powerups-container">
+            <button class="powerup-btn" id="freeze-btn" data-powerup="freeze">🧊 Dondur</button>
+            <button class="powerup-btn" id="double-btn" data-powerup="double">2️⃣ 2x Puan</button>
+            <button class="powerup-btn" id="magnet-btn" data-powerup="magnet">🧲 Mıknatıs</button>
+            <button class="powerup-btn" id="auto-btn" data-powerup="auto">🤖 Otomatik</button>
         </div>
 
         <!-- Pause Button -->
         <button id="pause-btn" class="pause-btn">⏸️</button>
     </div>
 
+    <!-- Pause Ekranı -->
+    <div id="pause-screen" class="screen hidden overlay">
+        <div class="pause-container">
+            <h2>⏸️ Oyun Duraklatıldı</h2>
+            <button class="btn btn--primary" id="resume-btn">Devam Et</button>
+            <button class="btn btn--secondary" id="restart-btn">Yeniden Başla</button>
+            <button class="btn btn--secondary" id="main-menu-btn">Ana Menü</button>
+        </div>
+    </div>
+
     <!-- Game Over Ekranı -->
-    <div id="game-over" class="screen hidden">
+    <div id="game-over" class="screen hidden overlay">
         <div class="game-over-container">
             <h2>🎯 Oyun Bitti!</h2>
             <div class="final-stats">
                 <div class="stat">
-                    <span class="stat-label">Final Puanın:</span>
-                    <span id="final-score" class="stat-value">0</span>
+                    <span class="stat-label">Final Puanı:</span>
+                    <span id="final-score">0</span>
                 </div>
                 <div class="stat">
                     <span class="stat-label">En Yüksek Combo:</span>
-                    <span id="highest-combo" class="stat-value">1x</span>
+                    <span id="best-combo">1x</span>
                 </div>
                 <div class="stat">
                     <span class="stat-label">Seviye:</span>
-                    <span id="final-level" class="stat-value">1</span>
+                    <span id="final-level">1</span>
                 </div>
             </div>
             
             <div class="continue-options">
-                <button class="btn btn--primary" id="watch-ad-continue">📺 Reklam İzle ve Devam Et</button>
-                <button class="btn btn--secondary" id="restart-btn">🔄 Yeniden Başla</button>
-                <button class="btn btn--outline" id="main-menu-btn">🏠 Ana Menü</button>
-            </div>
-            
-            <div class="social-share">
-                <p>🎉 Arkadaşlarınla Paylaş!</p>
-                <button class="share-btn" id="share-twitter">🐦 Twitter</button>
-                <button class="share-btn" id="share-facebook">📘 Facebook</button>
+                <button class="btn btn--primary" id="watch-ad-btn">📺 Reklam İzle - Devam Et</button>
+                <button class="btn btn--secondary" id="play-again-btn">🔄 Tekrar Oyna</button>
+                <button class="btn btn--tertiary" id="share-score-btn">📱 Puanı Paylaş</button>
             </div>
         </div>
     </div>
 
-    <!-- Başarım Bildirimi -->
+    <!-- Achievement Notification -->
     <div id="achievement-notification" class="achievement-notification hidden">
         <div class="achievement-content">
             <span class="achievement-icon">🏆</span>
             <div class="achievement-text">
-                <div class="achievement-title">Başarım Kazandın!</div>
-                <div class="achievement-description"></div>
+                <div class="achievement-title">Başarı Kazanıldı!</div>
+                <div class="achievement-description" id="achievement-desc"></div>
             </div>
-            <div class="achievement-reward">+<span class="reward-amount"></span>💰</div>
+            <span class="achievement-reward" id="achievement-reward">+100</span>
         </div>
     </div>
 
-    <!-- Mağaza Modal -->
-    <div id="shop-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>🛒 Mağaza</h3>
-                <button class="close-btn" id="close-shop">×</button>
+    <!-- Mağaza Ekranı -->
+    <div id="shop-screen" class="screen hidden overlay">
+        <div class="shop-container">
+            <h2>🛒 Mağaza</h2>
+            <div class="shop-tabs">
+                <button class="shop-tab active" data-tab="powerups">Güç Arttırıcılar</button>
+                <button class="shop-tab" data-tab="premium">Premium</button>
             </div>
-            <div class="modal-body">
-                <div class="shop-section">
-                    <h4>💰 Para Paketleri</h4>
-                    <div class="shop-items">
-                        <div class="shop-item">
-                            <span class="item-name">Küçük Para</span>
-                            <span class="item-price">₺9,99</span>
-                            <button class="btn btn--sm btn--primary">Satın Al</button>
-                        </div>
-                        <div class="shop-item popular">
-                            <span class="popular-badge">En Popüler!</span>
-                            <span class="item-name">Büyük Para</span>
-                            <span class="item-price">₺29,99</span>
-                            <button class="btn btn--sm btn--primary">Satın Al</button>
+            
+            <div class="shop-content" id="powerups-tab">
+                <div class="shop-item">
+                    <div class="item-info">
+                        <span class="item-icon">🧊</span>
+                        <div class="item-details">
+                            <h3>Dondur</h3>
+                            <p>5 saniye kabarcıkları dondurur</p>
                         </div>
                     </div>
+                    <button class="buy-btn" data-item="freeze" data-cost="50">50 💰</button>
                 </div>
                 
-                <div class="shop-section">
-                    <h4>⚡ Güçlendirmeler</h4>
-                    <div class="shop-items">
-                        <div class="shop-item">
-                            <span class="item-name">Reklamları Kaldır</span>
-                            <span class="item-price">₺19,99</span>
-                            <button class="btn btn--sm btn--primary">Satın Al</button>
-                        </div>
-                        <div class="shop-item">
-                            <span class="item-name">Sınırsız Enerji</span>
-                            <span class="item-price">₺49,99</span>
-                            <button class="btn btn--sm btn--primary">Satın Al</button>
+                <div class="shop-item">
+                    <div class="item-info">
+                        <span class="item-icon">2️⃣</span>
+                        <div class="item-details">
+                            <h3>Çift Puan</h3>
+                            <p>10 saniye 2x puan kazanırsın</p>
                         </div>
                     </div>
+                    <button class="buy-btn" data-item="double" data-cost="30">30 💰</button>
                 </div>
             </div>
+            
+            <button class="btn btn--secondary close-shop">Kapat</button>
         </div>
     </div>
 
-    <!-- Liderlik Tablosu Modal -->
-    <div id="leaderboard-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>🏆 Liderlik Tablosu</h3>
-                <button class="close-btn" id="close-leaderboard">×</button>
+    <!-- Liderlik Tablosu -->
+    <div id="leaderboard-screen" class="screen hidden overlay">
+        <div class="leaderboard-container">
+            <h2>🏆 Liderlik Tablosu</h2>
+            <div class="leaderboard-list" id="leaderboard-list">
+                <!-- JavaScript ile doldurulacak -->
             </div>
-            <div class="modal-body">
-                <div class="leaderboard-tabs">
-                    <button class="tab-btn active" data-tab="daily">Günlük</button>
-                    <button class="tab-btn" data-tab="weekly">Haftalık</button>
-                    <button class="tab-btn" data-tab="alltime">Tüm Zamanlar</button>
-                </div>
-                
-                <div class="leaderboard-list" id="leaderboard-list">
-                    <!-- Dinamik olarak doldurulacak -->
-                </div>
-            </div>
+            <button class="btn btn--secondary close-leaderboard">Kapat</button>
         </div>
     </div>
 
-    <!-- Günlük Ödül Spinner -->
-    <div id="daily-reward-modal" class="modal hidden">
-        <div class="modal-content reward-modal">
-            <div class="modal-header">
-                <h3>🎁 Günlük Ödülün!</h3>
-            </div>
-            <div class="modal-body">
-                <div class="reward-spinner" id="reward-spinner">
-                    <div class="spinner-arrow">▲</div>
-                    <div class="spinner-wheel">
-                        <div class="wheel-segment" data-reward="50">50💰</div>
-                        <div class="wheel-segment" data-reward="100">100💰</div>
-                        <div class="wheel-segment" data-reward="25">25💰</div>
-                        <div class="wheel-segment" data-reward="200">200💰</div>
-                        <div class="wheel-segment" data-reward="75">75💰</div>
-                        <div class="wheel-segment" data-reward="powerup">Güç!</div>
-                    </div>
+    <!-- Loading Ekranı -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">🫧</div>
+            <div class="loading-text">Bubble Pop Mania</div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="loading-progress-fill"></div>
                 </div>
-                <button class="btn btn--primary" id="spin-wheel">🎰 Çevir!</button>
-                <div id="reward-result" class="reward-result hidden"></div>
+                <div class="loading-percentage" id="loading-percentage">0%</div>
             </div>
+            <div class="loading-tip" id="loading-tip">İpucu: Combo yaparak daha fazla puan kazan!</div>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script src="app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker kayıt başarılı: ', registration.scope);
+                    }, function(err) {
+                        console.log('ServiceWorker kayıt başarısız: ', err);
+                    });
+            });
+        }
+    </script>
+
+    <!-- PWA Install Prompt -->
+    <script>
+        let deferredPrompt;
+        let installButton = null;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA install prompt gösterildi');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Install butonu göster
+            if (!installButton) {
+                installButton = document.createElement('button');
+                installButton.textContent = '📱 Ana Ekrana Ekle';
+                installButton.className = 'btn btn--install';
+                installButton.style.position = 'fixed';
+                installButton.style.bottom = '20px';
+                installButton.style.right = '20px';
+                installButton.style.zIndex = '9999';
+                document.body.appendChild(installButton);
+                
+                installButton.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((result) => {
+                            if (result.outcome === 'accepted') {
+                                console.log('PWA install kabul edildi');
+                            }
+                            deferredPrompt = null;
+                            installButton.remove();
+                        });
+                    }
+                });
+            }
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA başarıyla kuruldu!');
+            if (installButton) {
+                installButton.remove();
+            }
+        });
+    </script>
+
+    <!-- Analytics ve Tracking -->
+    <script>
+        // Basit analytics
+        function trackEvent(action, category = 'Game') {
+            console.log(`Analytics: ${category} - ${action}`);
+            // Buraya Google Analytics veya başka tracking kodu eklenebilir
+        }
+
+        // Oyun eventi tracking'leri
+        window.addEventListener('DOMContentLoaded', () => {
+            trackEvent('Game Loaded');
+        });
+    </script>
 </body>
 </html>
