@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Pop Mania - Milyonlarca Oyuncunun Favorisi!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Ana Menü -->
+    <div id="main-menu" class="screen active">
+        <div class="menu-container">
+            <h1 class="game-title">🫧 BUBBLE POP MANIA 🫧</h1>
+            <p class="game-subtitle">Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!</p>
+            
+            <div class="daily-streak">
+                <span class="streak-text">🔥 Günlük Seri: <span id="daily-streak">1</span> Gün</span>
+            </div>
+            
+            <button class="btn btn--primary btn--lg" id="play-btn">🎯 OYNA</button>
+            <button class="btn btn--secondary" id="shop-btn">🛒 Mağaza</button>
+            <button class="btn btn--secondary" id="leaderboard-btn">🏆 Liderlik Tablosu</button>
+            
+            <div class="energy-container">
+                <span class="energy-label">⚡ Enerji:</span>
+                <div class="energy-bar">
+                    <div id="energy-fill" class="energy-fill"></div>
+                </div>
+                <span id="energy-text">5/5</span>
+                <button id="buy-energy" class="energy-buy">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Ekranı -->
+    <div id="tutorial" class="screen hidden">
+        <div class="tutorial-container">
+            <h2>🎮 Nasıl Oynanır?</h2>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <span class="step-number">1</span>
+                    <p>Kabarcıkları tıkla/dokun ve patlat! 🫧</p>
+                </div>
+                <div class="tutorial-step">
+                    <span class="step-number">2</span>
+                    <p>Farklı renkler farklı puanlar verir! 💎</p>
+                </div>
+                <div class="tutorial-step">
+                    <span class="step-number">3</span>
+                    <p>Combo yap ve çarpanları artır! 🔥</p>
+                </div>
+            </div>
+            <button class="btn btn--primary" id="start-tutorial">Başla</button>
+        </div>
+    </div>
+
+    <!-- Oyun Ekranı -->
+    <div id="game-screen" class="screen hidden">
+        <!-- UI Panel -->
+        <div class="game-ui">
+            <div class="ui-top">
+                <div class="score-container">
+                    <span class="label">Puan:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="combo-container">
+                    <span class="label">Combo:</span>
+                    <span id="combo">1x</span>
+                </div>
+                <div class="level-container">
+                    <span class="label">Seviye:</span>
+                    <span id="level">1</span>
+                </div>
+            </div>
+            
+            <div class="ui-bottom">
+                <div class="lives-container">
+                    <span class="label">❤️ Canlar:</span>
+                    <div id="lives-display"></div>
+                </div>
+                
+                <div class="powerups-container">
+                    <button class="powerup-btn" data-powerup="freeze">⏰</button>
+                    <button class="powerup-btn" data-powerup="double">✨</button>
+                    <button class="powerup-btn" data-powerup="magnet">🧲</button>
+                    <button class="powerup-btn" data-powerup="auto">🤖</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Oyun Alanı -->
+        <div id="game-area">
+            <canvas id="game-canvas"></canvas>
+        </div>
+
+        <!-- Pause Button -->
+        <button id="pause-btn" class="pause-btn">⏸️</button>
+    </div>
+
+    <!-- Game Over Ekranı -->
+    <div id="game-over" class="screen hidden">
+        <div class="game-over-container">
+            <h2>🎯 Oyun Bitti!</h2>
+            <div class="final-stats">
+                <div class="stat">
+                    <span class="stat-label">Final Puanın:</span>
+                    <span id="final-score" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">En Yüksek Combo:</span>
+                    <span id="highest-combo" class="stat-value">1x</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Seviye:</span>
+                    <span id="final-level" class="stat-value">1</span>
+                </div>
+            </div>
+            
+            <div class="continue-options">
+                <button class="btn btn--primary" id="watch-ad-continue">📺 Reklam İzle ve Devam Et</button>
+                <button class="btn btn--secondary" id="restart-btn">🔄 Yeniden Başla</button>
+                <button class="btn btn--outline" id="main-menu-btn">🏠 Ana Menü</button>
+            </div>
+            
+            <div class="social-share">
+                <p>🎉 Arkadaşlarınla Paylaş!</p>
+                <button class="share-btn" id="share-twitter">🐦 Twitter</button>
+                <button class="share-btn" id="share-facebook">📘 Facebook</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Başarım Bildirimi -->
+    <div id="achievement-notification" class="achievement-notification hidden">
+        <div class="achievement-content">
+            <span class="achievement-icon">🏆</span>
+            <div class="achievement-text">
+                <div class="achievement-title">Başarım Kazandın!</div>
+                <div class="achievement-description"></div>
+            </div>
+            <div class="achievement-reward">+<span class="reward-amount"></span>💰</div>
+        </div>
+    </div>
+
+    <!-- Mağaza Modal -->
+    <div id="shop-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛒 Mağaza</h3>
+                <button class="close-btn" id="close-shop">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="shop-section">
+                    <h4>💰 Para Paketleri</h4>
+                    <div class="shop-items">
+                        <div class="shop-item">
+                            <span class="item-name">Küçük Para</span>
+                            <span class="item-price">₺9,99</span>
+                            <button class="btn btn--sm btn--primary">Satın Al</button>
+                        </div>
+                        <div class="shop-item popular">
+                            <span class="popular-badge">En Popüler!</span>
+                            <span class="item-name">Büyük Para</span>
+                            <span class="item-price">₺29,99</span>
+                            <button class="btn btn--sm btn--primary">Satın Al</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shop-section">
+                    <h4>⚡ Güçlendirmeler</h4>
+                    <div class="shop-items">
+                        <div class="shop-item">
+                            <span class="item-name">Reklamları Kaldır</span>
+                            <span class="item-price">₺19,99</span>
+                            <button class="btn btn--sm btn--primary">Satın Al</button>
+                        </div>
+                        <div class="shop-item">
+                            <span class="item-name">Sınırsız Enerji</span>
+                            <span class="item-price">₺49,99</span>
+                            <button class="btn btn--sm btn--primary">Satın Al</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liderlik Tablosu Modal -->
+    <div id="leaderboard-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏆 Liderlik Tablosu</h3>
+                <button class="close-btn" id="close-leaderboard">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-tab="daily">Günlük</button>
+                    <button class="tab-btn" data-tab="weekly">Haftalık</button>
+                    <button class="tab-btn" data-tab="alltime">Tüm Zamanlar</button>
+                </div>
+                
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <!-- Dinamik olarak doldurulacak -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Günlük Ödül Spinner -->
+    <div id="daily-reward-modal" class="modal hidden">
+        <div class="modal-content reward-modal">
+            <div class="modal-header">
+                <h3>🎁 Günlük Ödülün!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="reward-spinner" id="reward-spinner">
+                    <div class="spinner-arrow">▲</div>
+                    <div class="spinner-wheel">
+                        <div class="wheel-segment" data-reward="50">50💰</div>
+                        <div class="wheel-segment" data-reward="100">100💰</div>
+                        <div class="wheel-segment" data-reward="25">25💰</div>
+                        <div class="wheel-segment" data-reward="200">200💰</div>
+                        <div class="wheel-segment" data-reward="75">75💰</div>
+                        <div class="wheel-segment" data-reward="powerup">Güç!</div>
+                    </div>
+                </div>
+                <button class="btn btn--primary" id="spin-wheel">🎰 Çevir!</button>
+                <div id="reward-result" class="reward-result hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
