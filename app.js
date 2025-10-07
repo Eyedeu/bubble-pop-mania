@@ -1853,7 +1853,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Oyunu başlat
     window.game = new BubblePopGame();
-});
 // === Reklam Gösterme / Gizleme Fonksiyonları ===
 function showAds() {
     document.querySelectorAll('.ad-container').forEach(ad => ad.classList.remove('hidden'));
@@ -1879,6 +1878,7 @@ const restartBtn = document.getElementById('restart-btn');
 if (mainMenuBtn) mainMenuBtn.addEventListener('click', hideAds);
 if (backToMenuBtn) backToMenuBtn.addEventListener('click', hideAds);
 if (restartBtn) restartBtn.addEventListener('click', hideAds);
+});
 
 // Service Worker
 if ('serviceWorker' in navigator) {
