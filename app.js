@@ -1862,4 +1862,23 @@ if ('serviceWorker' in navigator) {
             .then(() => console.log('✅ ServiceWorker kaydedildi'))
             .catch(() => console.log('❌ ServiceWorker kayıt hatası'));
     });
+    // === Reklam Gösterme / Gizleme Fonksiyonları ===
+function showAds() {
+    document.querySelectorAll('.ad-container').forEach(ad => ad.classList.remove('hidden'));
+}
+
+function hideAds() {
+    document.querySelectorAll('.ad-container').forEach(ad => ad.classList.add('hidden'));
+}
+
+// "Oyna" butonuna basıldığında reklamları göster
+document.getElementById('play-btn').addEventListener('click', () => {
+    showAds();
+});
+
+// Ana menüye dönülünce veya oyun bitince reklamları gizle
+document.getElementById('main-menu-btn')?.addEventListener('click', hideAds);
+document.getElementById('back-to-menu-btn')?.addEventListener('click', hideAds);
+document.getElementById('restart-btn')?.addEventListener('click', hideAds);
+
 }
