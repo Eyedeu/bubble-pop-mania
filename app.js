@@ -1,5 +1,3 @@
-// Bubble Pop Mania - Mükemmel Çalışır Versiyon + Çoklu Dil
-
 // Çoklu Dil Sistemi (5 Dil - Tam Çevrilmiş)
 const GAME_LANGUAGES = {
     tr: {
@@ -14,6 +12,7 @@ const GAME_LANGUAGES = {
         
         // Stats
         dailyStreak: "🔥 Günlük Seri:",
+        days: "Gün", // DÜZELTME 2: Günlük seri için "Gün" eklendi
         energy: "⚡ Enerji:",
         highScore: "En Yüksek Puan:",
         totalGames: "Toplam Oynama:",
@@ -90,6 +89,7 @@ const GAME_LANGUAGES = {
         settings: "⚙️ Settings",
         
         dailyStreak: "🔥 Daily Streak:",
+        days: "Day", // DÜZELTME 2: İngilizce için "Day"
         energy: "⚡ Energy:",
         highScore: "High Score:",
         totalGames: "Total Games:",
@@ -159,6 +159,7 @@ const GAME_LANGUAGES = {
         settings: "⚙️ Einstellungen",
         
         dailyStreak: "🔥 Tägliche Serie:",
+        days: "Tag", // DÜZELTME 2: Almanca için "Tag"
         energy: "⚡ Energie:",
         highScore: "Highscore:",
         totalGames: "Spiele Gesamt:",
@@ -228,6 +229,7 @@ const GAME_LANGUAGES = {
         settings: "⚙️ Paramètres",
         
         dailyStreak: "🔥 Série Quotidienne:",
+        days: "Jour", // DÜZELTME 2: Fransızca için "Jour"
         energy: "⚡ Énergie:",
         highScore: "Meilleur Score:",
         totalGames: "Parties Totales:",
@@ -297,6 +299,7 @@ const GAME_LANGUAGES = {
         settings: "⚙️ Ajustes",
         
         dailyStreak: "🔥 Racha Diaria:",
+        days: "Día", // DÜZELTME 2: İspanyolca için "Día"
         energy: "⚡ Energía:",
         highScore: "Puntuación Máxima:",
         totalGames: "Partidas Totales:",
@@ -462,13 +465,30 @@ class BubblePopGame {
         this.totalGames = parseInt(localStorage.getItem('totalGames') || '0');
         this.bubblesPopped = 0;
         
+        // DÜZELTME: Achievement timeout için
+        this.achievementTimeout = null;
+        this.isAchievementShowing = false; // Achievement gösterim durumu
+        
+        // Power-up kullanım hakları
+        this.powerUpUses = {
+            freeze: 1,
+            double: 1, 
+            magnet: 1,
+            auto: 1
+        };
+        
         // Seviye sistemi
         this.levelSettings = {
-            1: { speedMultiplier: 1.0, spawnDelay: 2500, maxBubbles: 6, rareChance: 0.1, bgColor: '#87CEEB' },
-            2: { speedMultiplier: 1.2, spawnDelay: 2200, maxBubbles: 7, rareChance: 0.15, bgColor: '#78B3D6' },
-            3: { speedMultiplier: 1.4, spawnDelay: 1900, maxBubbles: 8, rareChance: 0.2, bgColor: '#6998C1' },
-            4: { speedMultiplier: 1.6, spawnDelay: 1600, maxBubbles: 9, rareChance: 0.25, bgColor: '#5A7DAC' },
-            5: { speedMultiplier: 1.8, spawnDelay: 1300, maxBubbles: 10, rareChance: 0.3, bgColor: '#4B6297' }
+            1: { speedMultiplier: 1.0, spawnDelay: 2800, maxBubbles: 5, rareChance: 0.1, bgColor: '#87CEEB' },
+            2: { speedMultiplier: 1.3, spawnDelay: 2400, maxBubbles: 6, rareChance: 0.15, bgColor: '#78B3D6' },
+            3: { speedMultiplier: 1.6, spawnDelay: 2000, maxBubbles: 8, rareChance: 0.2, bgColor: '#6998C1' },
+            4: { speedMultiplier: 2.0, spawnDelay: 1600, maxBubbles: 10, rareChance: 0.25, bgColor: '#5A7DAC' },
+            5: { speedMultiplier: 2.4, spawnDelay: 1300, maxBubbles: 12, rareChance: 0.3, bgColor: '#4B6297' },
+            6: { speedMultiplier: 2.8, spawnDelay: 1000, maxBubbles: 14, rareChance: 0.35, bgColor: '#3C5482' },
+            7: { speedMultiplier: 3.2, spawnDelay: 800, maxBubbles: 16, rareChance: 0.4, bgColor: '#2D456D' },
+            8: { speedMultiplier: 3.6, spawnDelay: 650, maxBubbles: 18, rareChance: 0.45, bgColor: '#1E3658' },
+            9: { speedMultiplier: 4.0, spawnDelay: 500, maxBubbles: 20, rareChance: 0.5, bgColor: '#0F2743' },
+            10: { speedMultiplier: 4.5, spawnDelay: 400, maxBubbles: 22, rareChance: 0.6, bgColor: '#00182E' }
         };
         
         this.levelUpEffects = [];
@@ -489,7 +509,7 @@ class BubblePopGame {
         this.animationId = null;
         this.lastTime = 0;
         this.spawnTimer = 0;
-        this.spawnDelay = 2500;
+        this.spawnDelay = 2800;
         
         // Balon tipleri
         this.bubbleTypes = [
@@ -500,12 +520,23 @@ class BubblePopGame {
             {color: "#8B5CF6", points: 50, name: "Elmas", frequency: 2}
         ];
         
+        // Power-up balon tipleri
+        this.powerUpBubbleTypes = [
+            {type: "freeze", color: "#00BFFF", emoji: "🧊", frequency: 25},
+            {type: "double", color: "#FFD700", emoji: "⭐", frequency: 25},
+            {type: "magnet", color: "#FF6B6B", emoji: "🧲", frequency: 25},
+            {type: "auto", color: "#90EE90", emoji: "🤖", frequency: 25}
+        ];
+        
         this.init();
     }
     
     init() {
         console.log('🎮 Bubble Pop Mania - Güzel + Çalışır Versiyon başlatılıyor...');
         this.showLoadingScreen();
+        
+        // DÜZELTME: Achievement popup'ı baştan gizle
+        this.forceHideAchievement();
         
         setTimeout(() => {
             this.setupCanvas();
@@ -519,6 +550,8 @@ class BubblePopGame {
     showLoadingScreen() {
         this.gameState = 'loading';
         this.showScreen('loading-screen');
+        // DÜZELTME: Loading sırasında achievement kesinlikle gizle
+        this.forceHideAchievement();
     }
     
     setupCanvas() {
@@ -565,6 +598,7 @@ class BubblePopGame {
                 CURRENT_LANG = e.target.value;
                 localStorage.setItem('gameLang', CURRENT_LANG);
                 updateLanguageTexts();
+                this.updateDailyStreak(); // DÜZELTME 2: Dil değiştiğinde streak'i güncelle
                 console.log('🌍 Dil değiştirildi:', CURRENT_LANG);
             });
         }
@@ -637,6 +671,126 @@ class BubblePopGame {
         });
     }
     
+    // DÜZELTME: ZORUNLU Achievement popup gizleme
+    forceHideAchievement() {
+        const popup = document.getElementById('achievement-popup');
+        if (popup) {
+            popup.classList.add('hidden');
+            popup.style.display = 'none'; // Ekstra güvenlik
+        }
+        
+        if (this.achievementTimeout) {
+            clearTimeout(this.achievementTimeout);
+            this.achievementTimeout = null;
+        }
+        
+        this.isAchievementShowing = false;
+        console.log('🔒 Achievement popup zorla gizlendi');
+    }
+    
+    // DÜZELTME: Geliştirilmiş Achievement popup
+    showAchievement(title, description, points) {
+        // Oyun açılışında achievement gösterme
+        if (this.gameState === 'loading') {
+            console.log('🚫 Loading sırasında achievement gösterilmiyor:', title);
+            return;
+        }
+        
+        // Zaten bir achievement gösteriliyorsa, yenisini gösterme
+        if (this.isAchievementShowing) {
+            console.log('🚫 Zaten achievement gösteriliyor, yenisi engellendi:', title);
+            return;
+        }
+        
+        const popup = document.getElementById('achievement-popup');
+        if (!popup) return;
+        
+        // Mevcut timeout'u temizle
+        if (this.achievementTimeout) {
+            clearTimeout(this.achievementTimeout);
+            this.achievementTimeout = null;
+        }
+        
+        const titleEl = document.getElementById('achievement-title');
+        const descEl = document.getElementById('achievement-desc');
+        const pointsEl = document.getElementById('achievement-points');
+        
+        if (titleEl) titleEl.textContent = title;
+        if (descEl) descEl.textContent = description;
+        if (pointsEl) pointsEl.textContent = `+${points}`;
+        
+        popup.classList.remove('hidden');
+        popup.style.display = 'block'; // Ekstra güvenlik
+        this.isAchievementShowing = true;
+        
+        // 3 saniye sonra otomatik gizle
+        this.achievementTimeout = setTimeout(() => {
+            this.hideAchievement();
+        }, 3000);
+        
+        console.log('🏆 Achievement gösterildi:', title);
+    }
+    
+    hideAchievement() {
+        const popup = document.getElementById('achievement-popup');
+        if (popup) {
+            popup.classList.add('hidden');
+            popup.style.display = 'none'; // Ekstra güvenlik
+        }
+        
+        if (this.achievementTimeout) {
+            clearTimeout(this.achievementTimeout);
+            this.achievementTimeout = null;
+        }
+        
+        this.isAchievementShowing = false;
+        console.log('🔒 Achievement popup gizlendi');
+    }
+    
+    // DÜZELTME 2: Günlük seri sistemi eklendi
+    updateDailyStreak() {
+        const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+        
+        // Tarihleri al
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        const lastDateString = localStorage.getItem('lastStreakDate');
+        const lastDate = lastDateString ? new Date(lastDateString) : null;
+        
+        let streak = parseInt(localStorage.getItem('dailyStreak') || '1');
+        
+        if (!lastDate) {
+            // İlk defa oynuyor
+            streak = 1;
+        } else {
+            lastDate.setHours(0, 0, 0, 0);
+            const diffDays = Math.floor((today - lastDate) / (24 * 60 * 60 * 1000));
+            
+            if (diffDays === 1) {
+                // Dün oynamış, streak devam ediyor
+                streak += 1;
+            } else if (diffDays > 1) {
+                // 1 günden fazla ara vermiş, streak sıfırlanıyor
+                streak = 1;
+            }
+            // diffDays === 0 ise bugün zaten oynuyor, değişiklik yok
+        }
+        
+        // Güncel değerleri kaydet
+        localStorage.setItem('lastStreakDate', today.toISOString());
+        localStorage.setItem('dailyStreak', streak.toString());
+        
+        // UI'ı güncelle
+        const streakEl = document.getElementById('daily-streak-text');
+        if (streakEl) {
+            const daysText = streak === 1 ? LANG.days : LANG.days;
+            streakEl.textContent = `${LANG.dailyStreak} ${streak} ${daysText}`;
+        }
+        
+        console.log('📅 Günlük seri güncellendi:', streak);
+    }
+    
     // Ekran yönetimi
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(screen => {
@@ -647,6 +801,11 @@ class BubblePopGame {
         if (screen) {
             screen.classList.remove('hidden');
         }
+        
+        // DÜZELTME: Ekran değişiminde achievement gizle
+        if (screenId !== 'game-screen') {
+            this.forceHideAchievement();
+        }
     }
     
     showMainMenu() {
@@ -656,16 +815,20 @@ class BubblePopGame {
         }
         this.showScreen('main-menu');
         this.updateUI();
+        this.updateDailyStreak(); // DÜZELTME 2: Ana menüye döndüğünde streak'i güncelle
+        this.forceHideAchievement(); // DÜZELTME: Achievement popup'ı zorla gizle
         console.log('📱 Ana menü gösteriliyor');
     }
     
     showTutorial() {
         this.showScreen('tutorial-screen');
+        this.forceHideAchievement(); // DÜZELTME: Tutorial açıldığında achievement gizle
         console.log('📚 Tutorial gösteriliyor');
     }
     
     showSettings() {
         this.showScreen('settings-screen');
+        this.forceHideAchievement(); // DÜZELTME: Settings açıldığında achievement gizle
         console.log('⚙️ Ayarlar gösteriliyor');
     }
     
@@ -765,7 +928,6 @@ class BubblePopGame {
     shareToWhatsApp() {
         const gameURL = document.getElementById('game-url')?.value || window.location.href;
         const text = encodeURIComponent(`🫧 Bubble Pop Mania - Harika oyun! ${this.score > 0 ? `${this.score} puan yaptım! ` : ''}🎯 ${gameURL}`);
-        
         const whatsappURL = `https://wa.me/?text=${text}`;
         window.open(whatsappURL, '_blank');
     }
@@ -790,15 +952,24 @@ class BubblePopGame {
     checkLevelUp() {
         const oldLevel = this.level;
         
-        if (this.score >= 500 && this.level === 1) {
+        // Seviye geçiş puanları
+        if (this.score >= 300 && this.level === 1) {
             this.level = 2;
-        } else if (this.score >= 1500 && this.level === 2) {
+        } else if (this.score >= 800 && this.level === 2) {
             this.level = 3;
-        } else if (this.score >= 3000 && this.level === 3) {
+        } else if (this.score >= 1500 && this.level === 3) {
             this.level = 4;
-        } else if (this.score >= 5000 && this.level === 4) {
+        } else if (this.score >= 2500 && this.level === 4) {
             this.level = 5;
-        } else if (this.score >= 8000 && this.level >= 5) {
+        } else if (this.score >= 4000 && this.level === 5) {
+            this.level = 6;
+        } else if (this.score >= 6000 && this.level === 6) {
+            this.level = 7;
+        } else if (this.score >= 8500 && this.level === 7) {
+            this.level = 8;
+        } else if (this.score >= 12000 && this.level === 8) {
+            this.level = 9;
+        } else if (this.score >= 16000 && this.level >= 9) {
             this.level = Math.min(10, Math.floor(this.score / 2000));
         }
         
@@ -814,6 +985,16 @@ class BubblePopGame {
         this.showLevelUpEffect(newLevel);
         this.createLevelUpParticles();
         
+        // Achievement göster (sadece oyun sırasında)
+        if (this.gameState === 'playing') {
+            const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+            this.showAchievement(
+                `${LANG.level || 'Seviye'} ${newLevel}!`,
+                `Tebrikler! ${LANG.level || 'Seviye'} ${newLevel}'e ulaştın!`,
+                newLevel * 50
+            );
+        }
+        
         console.log('🎵 *LEVEL UP SOUND*');
     }
     
@@ -825,7 +1006,7 @@ class BubblePopGame {
     }
     
     getCurrentLevelSettings() {
-        return this.levelSettings[this.level] || this.levelSettings[5];
+        return this.levelSettings[this.level] || this.levelSettings[10];
     }
     
     showLevelUpEffect(newLevel) {
@@ -893,7 +1074,15 @@ class BubblePopGame {
         this.particles = [];
         this.levelUpEffects = [];
         this.spawnTimer = 0;
-        this.spawnDelay = 2500;
+        this.spawnDelay = 2800;
+        
+        // Power-up hakları resetle
+        this.powerUpUses = {
+            freeze: 1,
+            double: 1,
+            magnet: 1,
+            auto: 1
+        };
         
         Object.keys(this.powerUps).forEach(key => {
             this.powerUps[key] = false;
@@ -901,6 +1090,8 @@ class BubblePopGame {
         
         this.showScreen('game-screen');
         this.updateUI();
+        this.updatePowerUpButtons();
+        this.forceHideAchievement(); // DÜZELTME: Oyun başlarken achievement gizle
         
         this.createBubble();
         this.createBubble();
@@ -998,18 +1189,49 @@ class BubblePopGame {
     createBubble() {
         const settings = this.getCurrentLevelSettings();
         
+        // %15 şansla power-up balonu oluştur (seviye 2'den itibaren)
+        if (this.level >= 2 && Math.random() < 0.15) {
+            return this.createPowerUpBubble();
+        }
+        
         const bubble = {
             x: Math.random() * (this.canvas.width - 100) + 50,
             y: this.canvas.height + 30,
-            radius: 22 + Math.random() * 13, // 22-35 arası
-            speed: (0.9 + Math.random() * 0.4) * settings.speedMultiplier, // 0.9-1.3 * multiplier
+            radius: 22 + Math.random() * 13,
+            speed: (0.9 + Math.random() * 0.4) * settings.speedMultiplier,
             color: this.getRandomBubbleColor(),
             id: Date.now() + Math.random(),
             alive: true,
-            pulsePhase: Math.random() * Math.PI * 2
+            pulsePhase: Math.random() * Math.PI * 2,
+            type: 'normal'
         };
         
         bubble.points = this.getBubblePoints(bubble.color);
+        this.bubbles.push(bubble);
+        
+        return bubble;
+    }
+    
+    // Power-up balonu oluşturma
+    createPowerUpBubble() {
+        const settings = this.getCurrentLevelSettings();
+        const powerUpType = this.powerUpBubbleTypes[Math.floor(Math.random() * this.powerUpBubbleTypes.length)];
+        
+        const bubble = {
+            x: Math.random() * (this.canvas.width - 100) + 50,
+            y: this.canvas.height + 30,
+            radius: 25 + Math.random() * 8,
+            speed: (0.7 + Math.random() * 0.3) * settings.speedMultiplier,
+            color: powerUpType.color,
+            id: Date.now() + Math.random(),
+            alive: true,
+            pulsePhase: Math.random() * Math.PI * 2,
+            type: 'powerup',
+            powerUpType: powerUpType.type,
+            emoji: powerUpType.emoji
+        };
+        
+        bubble.points = 0;
         this.bubbles.push(bubble);
         
         return bubble;
@@ -1068,6 +1290,18 @@ class BubblePopGame {
         if (!bubble.alive) return;
         
         bubble.alive = false;
+        
+        // Power-up balonu kontrolü
+        if (bubble.type === 'powerup') {
+            this.handlePowerUpBubble(bubble);
+            const index = this.bubbles.indexOf(bubble);
+            if (index > -1) {
+                this.bubbles.splice(index, 1);
+            }
+            this.createParticles(bubble.x, bubble.y, bubble.color);
+            return;
+        }
+        
         this.bubblesPopped++;
         
         let points = bubble.points;
@@ -1095,6 +1329,38 @@ class BubblePopGame {
         console.log(`💥 +${points} puan! (${this.combo-1}x combo)`);
     }
     
+    // Power-up balonu işleme
+    handlePowerUpBubble(bubble) {
+        const powerUpType = bubble.powerUpType;
+        
+        // Power-up hakkını artır
+        if (this.powerUpUses[powerUpType] !== undefined) {
+            this.powerUpUses[powerUpType]++;
+            this.updatePowerUpButtons();
+            
+            const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+            let typeName = '';
+            
+            switch(powerUpType) {
+                case 'freeze': typeName = LANG.freeze || 'Dondur'; break;
+                case 'double': typeName = LANG.double || '2x Puan'; break;
+                case 'magnet': typeName = LANG.magnet || 'Mıknatıs'; break;
+                case 'auto': typeName = LANG.auto || 'Otomatik'; break;
+            }
+            
+            // Achievement göster (sadece oyun sırasında)
+            if (this.gameState === 'playing') {
+                this.showAchievement(
+                    `${bubble.emoji} ${typeName}!`,
+                    `${typeName} hakkın +1 arttı!`,
+                    25
+                );
+            }
+        }
+        
+        console.log(`🎁 Power-up balonu patlatıldı: ${powerUpType}`);
+    }
+    
     // Oyun döngüsü
     gameLoop(currentTime) {
         if (this.gameState !== 'playing') return;
@@ -1110,11 +1376,14 @@ class BubblePopGame {
             this.createBubble();
             this.spawnTimer = 0;
             
-            // Yüksek seviyede ek balon şansı
-            if (this.level > 2 && Math.random() < 0.25) {
+            // Yüksek seviyede ek balonlar
+            if (this.level > 2 && Math.random() < 0.4) {
                 this.createBubble();
             }
-            if (this.level > 4 && Math.random() < 0.15) {
+            if (this.level > 4 && Math.random() < 0.25) {
+                this.createBubble();
+            }
+            if (this.level > 7 && Math.random() < 0.15) {
                 this.createBubble();
             }
         }
@@ -1157,15 +1426,19 @@ class BubblePopGame {
             // Ekran dışına çıkan balonları kaldır
             if (bubble.y + bubble.radius < -50) {
                 this.bubbles.splice(i, 1);
-                this.lives--;
-                this.combo = 1;
                 
-                if (this.lives <= 0) {
-                    this.gameOver();
-                    return;
-                } else {
-                    this.updateUI();
-                    console.log(`💔 Balon kaçtı! Kalan can: ${this.lives}`);
+                // Power-up balonları can azaltmaz
+                if (bubble.type !== 'powerup') {
+                    this.lives--;
+                    this.combo = 1;
+                    
+                    if (this.lives <= 0) {
+                        this.gameOver();
+                        return;
+                    } else {
+                        this.updateUI();
+                        console.log(`💔 Balon kaçtı! Kalan can: ${this.lives}`);
+                    }
                 }
             }
         }
@@ -1197,7 +1470,40 @@ class BubblePopGame {
     }
     
     updatePowerUps(deltaTime) {
-        // Power-up süre yönetimi
+        // Power-up süre yönetimi - mevcut kod korundu
+    }
+    
+    // Power-up buton güncelleme
+    updatePowerUpButtons() {
+        const buttons = ['freeze-btn', 'double-btn', 'magnet-btn', 'auto-btn'];
+        const types = ['freeze', 'double', 'magnet', 'auto'];
+        
+        buttons.forEach((btnId, index) => {
+            const btn = document.getElementById(btnId);
+            const type = types[index];
+            
+            if (btn) {
+                const uses = this.powerUpUses[type] || 0;
+                const isActive = this.powerUps[type];
+                
+                if (uses <= 0) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.4';
+                    btn.style.cursor = 'not-allowed';
+                } else {
+                    btn.disabled = false;
+                    btn.style.opacity = isActive ? '0.7' : '1';
+                    btn.style.cursor = 'pointer';
+                }
+                
+                // Hak sayısını göster
+                const textEl = btn.querySelector('span');
+                if (textEl) {
+                    const originalText = textEl.textContent.split(' (')[0];
+                    textEl.textContent = `${originalText} (${uses})`;
+                }
+            }
+        });
     }
     
     // Render
@@ -1301,8 +1607,15 @@ class BubblePopGame {
         this.ctx.lineWidth = 1.5;
         this.ctx.stroke();
         
-        // Puan gösterimi
-        if (bubble.points >= 10) {
+        // Power-up balonu için emoji
+        if (bubble.type === 'powerup' && bubble.emoji) {
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.font = Math.round(radius * 0.6) + 'px Arial';
+            this.ctx.fillText(bubble.emoji, bubble.x, bubble.y);
+        }
+        // Normal balon için puan gösterimi
+        else if (bubble.points >= 10) {
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
             this.ctx.font = 'bold ' + Math.round(radius * 0.35) + 'px Arial';
@@ -1396,15 +1709,33 @@ class BubblePopGame {
     activatePowerUp(type) {
         if (this.gameState !== 'playing') return;
         
+        // Hak kontrolü
+        if (this.powerUpUses[type] <= 0) {
+            const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
+            alert(`${type} power-up'ın bitti! Power-up balonlarını patlatarak yeni haklar kazan!`);
+            return;
+        }
+        
+        // Aktif power-up kontrolü
+        if (this.powerUps[type]) {
+            console.log('⚠️ Bu power-up zaten aktif:', type);
+            return;
+        }
+        
+        // Hakkı kullan
+        this.powerUpUses[type]--;
+        this.updatePowerUpButtons();
+        
         const LANG = GAME_LANGUAGES[CURRENT_LANG] || GAME_LANGUAGES.tr;
         
-        console.log('⚡ Power-up aktive:', type);
+        console.log('⚡ Power-up aktive:', type, '| Kalan hak:', this.powerUpUses[type]);
         
         switch(type) {
             case 'freeze':
                 this.powerUps.freeze = true;
                 setTimeout(() => {
                     this.powerUps.freeze = false;
+                    this.updatePowerUpButtons();
                 }, 5000);
                 console.log('🧊 ' + (LANG.freeze || 'Dondur') + ' aktif!');
                 break;
@@ -1413,6 +1744,7 @@ class BubblePopGame {
                 this.powerUps.double = true;
                 setTimeout(() => {
                     this.powerUps.double = false;
+                    this.updatePowerUpButtons();
                 }, 10000);
                 console.log('⭐ ' + (LANG.double || '2x Puan') + ' aktif!');
                 break;
@@ -1421,6 +1753,7 @@ class BubblePopGame {
                 this.powerUps.magnet = true;
                 setTimeout(() => {
                     this.powerUps.magnet = false;
+                    this.updatePowerUpButtons();
                 }, 8000);
                 console.log('🧲 ' + (LANG.magnet || 'Mıknatıs') + ' aktif!');
                 break;
@@ -1429,6 +1762,7 @@ class BubblePopGame {
                 this.powerUps.auto = true;
                 setTimeout(() => {
                     this.powerUps.auto = false;
+                    this.updatePowerUpButtons();
                 }, 15000);
                 console.log('🤖 ' + (LANG.auto || 'Otomatik') + ' aktif!');
                 break;
@@ -1491,6 +1825,13 @@ class BubblePopGame {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 DOM yüklendi, geliştirilmiş çoklu dil oyunu oluşturuluyor...');
     
+    // DÜZELTME: DOM yüklendiğinde achievement popup'ı zorla gizle
+    const achievementPopup = document.getElementById('achievement-popup');
+    if (achievementPopup) {
+        achievementPopup.classList.add('hidden');
+        achievementPopup.style.display = 'none';
+    }
+    
     // Dil seçici
     const langSelect = document.getElementById('language-select');
     if (langSelect) {
@@ -1499,6 +1840,10 @@ document.addEventListener('DOMContentLoaded', () => {
             CURRENT_LANG = e.target.value;
             localStorage.setItem('gameLang', CURRENT_LANG);
             updateLanguageTexts();
+            // Oyun varsa günlük streak'i de güncelle
+            if (window.game) {
+                window.game.updateDailyStreak();
+            }
             console.log('🌍 Dil değiştirildi:', CURRENT_LANG);
         });
     }
