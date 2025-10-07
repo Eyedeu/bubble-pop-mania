@@ -157,7 +157,7 @@ body {
 
 .btn--lg {
     padding: 20px 30px;
-    font-size: 1.3rem;
+    font-size: 1.3rem;  
 }
 
 .btn--small {
@@ -166,27 +166,6 @@ body {
     margin: 5px 0;
     width: auto;
     display: inline-block;
-}
-
-/* Social Buttons */
-.btn--social {
-    width: auto;
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 0.9rem;
-    border-radius: 25px;
-}
-
-.btn--social.whatsapp {
-    background: linear-gradient(45deg, #25D366, #128C7E);
-}
-
-.btn--social.telegram {
-    background: linear-gradient(45deg, #0088cc, #005580);
-}
-
-.btn--social.twitter {
-    background: linear-gradient(45deg, #1DA1F2, #0d8bd9);
 }
 
 /* Energy Bar */
@@ -278,149 +257,6 @@ body {
     color: #666;
 }
 
-#qr-code-display img {
-    border-radius: 7px;
-}
-
-.download-options {
-    display: grid;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.download-option {
-    background: rgba(59, 130, 246, 0.1);
-    padding: 15px;
-    border-radius: 10px;
-    text-align: left;
-}
-
-.download-option h3 {
-    color: #3B82F6;
-    margin-bottom: 8px;
-}
-
-.download-option p {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 10px;
-}
-
-.url-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.url-input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    background: #f9f9fa;
-}
-
-/* Social Share */
-.social-share {
-    margin: 25px 0;
-    padding: 20px;
-    background: rgba(16, 185, 129, 0.1);
-    border-radius: 15px;
-}
-
-.social-share h3 {
-    color: #10B981;
-    margin-bottom: 15px;
-}
-
-.social-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-/* Tutorial */
-.tutorial-content {
-    text-align: left;
-    margin: 20px 0;
-}
-
-.tutorial-step {
-    display: flex;
-    align-items: flex-start;
-    margin: 20px 0;
-    padding: 15px;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 10px;
-}
-
-.step-number {
-    background: #3B82F6;
-    color: white;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-
-/* Settings Screen Styles */
-.settings-content {
-    margin: 20px 0;
-}
-
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.setting-item:last-child {
-    border-bottom: none;
-}
-
-.setting-item label {
-    font-weight: bold;
-    color: #333;
-}
-
-.setting-select {
-    padding: 8px 12px;
-    border: 2px solid #3B82F6;
-    border-radius: 8px;
-    background: white;
-    color: #333;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.setting-select:focus {
-    outline: none;
-    border-color: #1D4ED8;
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
-}
-
-input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-/* Game Screen */
-#game-screen {
-    flex-direction: column;
-    padding: 10px;
-}
-
 /* Oyun ve Reklam Konteyneri */
 .game-play-container {
     display: flex;
@@ -432,7 +268,6 @@ input[type="checkbox"] {
     box-sizing: border-box;
 }
 
-/* Reklam slotları */
 .ad-slot {
     flex-shrink: 0;
     display: flex;
@@ -440,7 +275,7 @@ input[type="checkbox"] {
     justify-content: center;
 }
 
-/* Oyun alanı genişliğinin korunması */
+/* Oyun Alanı */
 .game-area {
     flex: 1;
     position: relative;
@@ -456,252 +291,28 @@ input[type="checkbox"] {
     }
 }
 
-/* Pause Button */
-.pause-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-}
-
-.pause-btn:hover {
-    transform: scale(1.1);
-}
-
-/* Power-ups */
-.powerups-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-    gap: 5px;
-}
-
-.powerup-btn {
-    background: linear-gradient(45deg, #8B5CF6, #7C3AED);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-}
-
-.powerup-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
-}
-
-.powerup-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 4px rgba(139, 92, 246, 0.3);
-}
-
-/* Pause Screen */
-.pause-stats {
-    margin: 20px 0;
-    text-align: center;
-}
-
-.stat {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    color: #333;
-}
-
-/* Game Over Screen */
-.game-over-modal {
-    max-width: 450px;
-}
-
-.final-stats {
-    margin: 20px 0;
-}
-
-.big-score {
-    margin-bottom: 20px;
-}
-
-.score-label {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.score-value {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #3B82F6;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.stat-value {
-    font-weight: bold;
-    color: #3B82F6;
-}
-
-.record-text {
-    color: #FF6B6B;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.game-over-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Achievement Popup */
-.achievement-popup {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    color: white;
-    padding: 15px 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
-    animation: slideInRight 0.5s ease-out;
-}
-
-.achievement-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.achievement-icon {
-    font-size: 2rem;
-}
-
-.achievement-text {
-    flex: 1;
-}
-
-.achievement-title {
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.achievement-desc {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-.achievement-points {
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Mobile Responsive */
+/* Responsive (küçük) ayarlar */
 @media (max-width: 480px) {
-    .menu-container {
-        padding: 20px;
-        margin: 10px;
-    }
-    
-    .game-title {
-        font-size: 2rem;
-    }
-    
-    .btn {
-        padding: 12px 16px;
-        font-size: 1rem;
-    }
-    
-    .btn--lg {
-        padding: 15px 20px;
-        font-size: 1.1rem;
-    }
-    
-    .modal-container {
-        padding: 20px;
-        margin: 10px;
-    }
-    
-    .powerups-container {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .powerup-btn {
-        flex: 1;
-        min-width: 80px;
-        font-size: 0.7rem;
-        padding: 6px 8px;
-    }
-    
-    .game-hud {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-    }
-    
-    .hud-left, .hud-right {
-        gap: 10px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
+    .menu-container { padding:20px; margin:10px; }
+    .game-title { font-size:2rem; }
+    .btn { padding:12px 16px; font-size:1rem; }
+    .btn--lg { padding:15px 20px; font-size:1.1rem; }
+    .modal-container { padding:20px; margin:10px; }
+    .powerups-container { flex-wrap:wrap; gap:8px; }
+    .powerup-btn { flex:1; min-width:80px; font-size:0.7rem; padding:6px 8px; }
+    .game-hud { padding:8px 15px; font-size:0.9rem; }
+    .hud-left, .hud-right { gap:10px; }
+    .stats-grid { grid-template-columns:1fr; gap:10px; }
 }
 
-/* Dark mode support */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-    .modal-container {
-        background: rgba(30, 30, 30, 0.95);
-        color: #e0e0e0;
-    }
-    
-    .setting-select {
-        background: #333;
-        color: #e0e0e0;
-        border-color: #555;
-    }
-    
-    .url-input {
-        background: #333;
-        color: #e0e0e0;
-        border-color: #555;
-    }
+    .modal-container { background:rgba(30,30,30,0.95); color:#e0e0e0; }
+    .setting-select, .url-input { background:#333; color:#e0e0e0; border-color:#555; }
 }
 
-/* Print styles (hide game elements) */
+/* Print */
 @media print {
-    body {
-        background: white;
-        color: black;
-    }
-    
-    .screen {
-        display: none !important;
-    }
+    body { background:white; color:black; }
+    .screen { display:none!important; }
 }
