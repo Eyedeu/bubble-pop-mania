@@ -757,7 +757,7 @@ input[type="checkbox"] {
 /* Sabit reklam alanları */
 .ad-section.fixed {
   position: fixed;
-  top: 60px;
+  top: 80px;
   bottom: 0;
   /*height: calc(100vh - 60px);*/
   width: 120px;
