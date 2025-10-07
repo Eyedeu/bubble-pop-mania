@@ -6,34 +6,17 @@
   <title>Bubble Pop Mania - Milyonların Favorisi</title>
   <meta name="description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu!">
   <meta name="keywords" content="oyun, balon patlatma, bubble pop">
+  <meta name="author" content="Eyedeu">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3B82F6">
   <link rel="stylesheet" href="style.css">
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8468426148009047"
-    crossorigin="anonymous"></script>
-  <style>
-    body { margin:0; overflow:hidden; }
-    #layout { display:flex; height:100vh; }
-    #ad-left, #ad-right {
-      width:120px;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    #game-container {
-      flex:1;
-      position:relative;
-      overflow:hidden;
-    }
-    .screen { position:absolute; top:0; left:0; width:100%; height:100%; }
-    .hidden { display:none; }
-    .loading-screen, .game-area, .menu-container { /* existing styles */ }
-    /* ...other CSS... */
-  </style>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8468426148009047" crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="layout">
-    <!-- Sol reklam -->
+    <!-- Sol Reklam (masaüstü) -->
     <div id="ad-left">
       <ins class="adsbygoogle"
            style="display:block"
@@ -42,53 +25,39 @@
            data-ad-format="auto"
            data-full-width-responsive="false"></ins>
     </div>
-
-    <!-- Oyun alanı -->
+    <!-- Oyun Alanı -->
     <div id="game-container">
-      <!-- Loading -->
       <div id="loading-screen" class="screen active">
-        <div class="loading-content">
-          <div class="loading-logo">🫧</div>
-          <div class="loading-text" id="loading-title">Bubble Pop Mania</div>
-          <div class="loading-tip" id="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
-        </div>
+        <div class="loading-logo">🫧</div>
+        <div class="loading-text" id="loading-title">Bubble Pop Mania</div>
+        <div class="loading-tip" id="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
       </div>
-
-      <!-- Ana Menü -->
       <div id="main-menu" class="screen hidden">
         <div class="menu-container">
           <h1 id="title">🫧 BUBBLE POP MANIA 🫧</h1>
           <p id="subtitle">Milyonların Favorisi!</p>
           <div class="daily-streak"><span id="daily-streak-text">🔥 Günlük Seri: 1 Gün</span></div>
-          <button id="play-btn">🎯 OYNA</button>
-          <button id="tutorial-btn">📚 Nasıl Oynanır</button>
-          <button id="settings-btn">⚙️ Ayarlar</button>
+          <button class="btn btn--primary" id="play-btn">🎯 OYNA</button>
+          <button class="btn btn--secondary" id="tutorial-btn">📚 Nasıl Oynanır</button>
+          <button class="btn btn--secondary" id="settings-btn">⚙️ Ayarlar</button>
         </div>
       </div>
-
-      <!-- Oyun Ekranı -->
       <div id="game-screen" class="screen hidden">
         <div class="game-hud">
           <div><span id="current-score">0</span></div>
           <div><span id="current-combo">1x</span></div>
         </div>
         <div class="game-area">
-          <canvas id="game-canvas"></canvas>
-          <button id="pause-btn">⏸️</button>
+          <canvas id="game-canvas" width="400" height="500"></canvas>
         </div>
       </div>
-
-      <!-- Achievement Popup -->
       <div id="achievement-popup" class="achievement-popup hidden">
-        <div>
-          <div id="achievement-title">Başarı!</div>
-          <div id="achievement-desc">İlk balonu patlattın!</div>
-          <div id="achievement-points">+50</div>
-        </div>
+        <div id="achievement-title">Başarı!<br></div>
+        <div id="achievement-desc">İlk balonu patlattın!</div>
+        <div id="achievement-points">+50</div>
       </div>
     </div>
-
-    <!-- Sağ reklam -->
+    <!-- Sağ Reklam (masaüstü) -->
     <div id="ad-right">
       <ins class="adsbygoogle"
            style="display:block"
@@ -98,10 +67,7 @@
            data-full-width-responsive="false"></ins>
     </div>
   </div>
-
   <script src="app.js"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </body>
 </html>
