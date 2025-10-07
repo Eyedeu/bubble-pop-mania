@@ -476,13 +476,12 @@ input[type="checkbox"] {
     max-width: 300px;
 }
 .ad-container {
-    position: sticky;
+    position: absolute;
     top: 20px;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;    /* reklam genişliği ile eşleşmeli */
+    height: 600px;   /* reklam yüksekliği ile eşleşmeli */
 }
 /* Mobil için */
  @media (max-width: 768px) {
