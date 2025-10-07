@@ -469,7 +469,34 @@ input[type="checkbox"] {
     align-items: center;
     position: relative;
 }
-
+/* Reklam Bölümü */
+.ad-section {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+.ad-container {
+    position: sticky;
+    top: 20px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* Mobil için */
+ @media (max-width: 768px) {
+     .main-container { flex-direction: column; }
+     .ad-section {
+         max-width: 100%;
+         margin-top: 20px;
+     }
+     .ad-container {
+         position: static;
+         margin: 0 auto;
+         max-width: 320px;
+     }
+ }
 #game-canvas {
     border: 3px solid #3B82F6;
     border-radius: 15px;
