@@ -1824,11 +1824,7 @@ class BubblePopGame {
 // Başlat
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 DOM yüklendi, geliştirilmiş çoklu dil oyunu oluşturuluyor...');
-       // AdSense reklamlarının yüklenmesini tetikle
-   if (window.adsbygoogle) {
-       console.log('AdSense script yüklendi');
-       (adsbygoogle = window.adsbygoogle || []).push({});
-   }
+    
     // DÜZELTME: DOM yüklendiğinde achievement popup'ı zorla gizle
     const achievementPopup = document.getElementById('achievement-popup');
     if (achievementPopup) {
