@@ -1,107 +1,45 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bubble Pop Mania - Milyonların Favorisi</title>
-    <meta name="description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu! Milyonlarca oyuncunun favorisi.">
-    <meta name="keywords" content="oyun, balon patlatma, bubble pop, mobile game, turkish game">
-    <meta name="author" content="Eyedeu">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3B82F6">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Google AdSense -->
-    <script async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8468426148009047"
-            crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>Bubble Pop Mania</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Sabit Üst Reklam -->
-    <div id="ad-banner" style="position:fixed; top:0; left:0; width:100%; z-index:2000; background:#fff; text-align:center; padding:5px 0;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8468426148009047"
-             data-ad-slot="6299276159"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+  <!-- GAME UI -->
+  <div id="loading-screen" class="screen active">
+    <div class="loading-content">
+      <div class="loading-logo">🫧</div>
+      <div class="loading-text" id="loading-title">Bubble Pop Mania</div>
+      <div class="loading-tip" id="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
     </div>
+  </div>
+  <div id="main-menu" class="screen hidden">
+    <!-- Ana Menü içeriği -->
+  </div>
+  <!-- Diğer ekranlar ve modallar -->
+  <div id="game-screen" class="screen hidden">
+    <!-- Oyun alanı -->
+  </div>
+  <div id="achievement-popup" class="achievement-popup hidden">
+    <!-- Achievement popup -->
+  </div>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="screen active" style="padding-top:60px;">
-        <div class="loading-content">
-            <div class="loading-logo">🫧</div>
-            <div class="loading-text" id="loading-title">Bubble Pop Mania</div>
-            <div class="loading-tip" id="loading-tip">Kabarcıklara tıklayarak puan kazan!</div>
-        </div>
-    </div>
+  <!-- REKLAM KODU YORUM SATIRINA ALINDI -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8468426148009047" crossorigin="anonymous"></script>
+  <div id="ad-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-8468426148009047"
+         data-ad-slot="6299276159"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
+  -->
 
-    <!-- Ana Menü -->
-    <div id="main-menu" class="screen hidden" style="padding-top:60px;">
-        <div class="menu-container">
-            <h1 class="game-title" id="title">🫧 BUBBLE POP MANIA 🫧</h1>
-            <p class="game-subtitle" id="subtitle">Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!</p>
-            <div class="daily-streak">
-                <span class="streak-text" id="daily-streak-text">🔥 Günlük Seri: 1 Gün</span>
-            </div>
-            <button class="btn btn--primary btn--lg" id="play-btn">🎯 OYNA</button>
-            <button class="btn btn--secondary" id="tutorial-btn">📚 Nasıl Oynanır</button>
-            <button class="btn btn--secondary" id="download-mobile-btn">📱 Telefona İndir</button>
-            <button class="btn btn--secondary" id="achievements-btn">🏆 Başarılar</button>
-            <button class="btn btn--secondary" id="settings-btn">⚙️ Ayarlar</button>
-            <div class="energy-container">
-                <span class="energy-label" id="energy-label">⚡ Enerji:</span>
-                <div class="energy-bar"><div id="energy-fill" class="energy-fill"></div></div>
-                <span id="energy-text">5/5</span>
-            </div>
-            <div class="stats-container">
-                <div class="stat-item"><span class="stat-label" id="high-score-label">En Yüksek Puan:</span><span id="high-score">0</span></div>
-                <div class="stat-item"><span class="stat-label" id="total-games-label">Toplam Oynama:</span><span id="total-games">0</span></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tutorial Ekranı -->
-    <div id="tutorial-screen" class="screen hidden overlay" style="padding-top:60px;">
-        <div class="modal-container">
-            <h2 id="tutorial-title">🎮 Nasıl Oynanır?</h2>
-            <div class="tutorial-content">
-                <div class="tutorial-step"><span class="step-number">1</span><p><strong id="pop-title">Kabarcıkları Patlat:</strong> <span id="pop-desc">Ekrana gelen kabarcıklara tıkla ve puan kazan!</span></p></div>
-                <div class="tutorial-step"><span class="step-number">2</span><p><strong id="color-title">Renkli Puanlar:</strong><br>
-                    🔵 Mavi = 1 puan<br>
-                    🟢 Yeşil = 2 puan<br>
-                    🔴 Kırmızı = 5 puan<br>
-                    🟡 Altın = 10 puan<br>
-                    🟣 Elmas = 50 puan</p></div>
-                <div class="tutorial-step"><span class="step-number">3</span><p><strong id="combo-title">Combo Sistemi:</strong> <span id="combo-desc">Arka arkaya balon patlatarak combo yap ve daha fazla puan kazan!</span></p></div>
-                <div class="tutorial-step"><span class="step-number">4</span><p><strong id="warning-title">Dikkat:</strong> <span id="warning-desc">Kabarcıklar yukarı çıkıp kaçarsa canın azalır. 5 can bitince oyun biter!</span></p></div>
-            </div>
-            <button class="btn btn--primary" id="tutorial-close">Anladım!</button>
-        </div>
-    </div>
-
-    <!-- Ayarlar Ekranı -->
-    <div id="settings-screen" class="screen hidden overlay" style="padding-top:60px;">
-        <div class="modal-container">
-            <h2 id="settings-title">⚙️ Ayarlar</h2>
-            <div class="settings-content">
-                <div class="setting-item"><label for="language-select" id="language-label">🌍 Dil:</label><select id="language-select" class="setting-select"><option value="tr">🇹🇷 Türkçe</option><option value="en">🇺🇸 English</option><option value="de">🇩🇪 Deutsch</option><option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option></select></div>
-                <div class="setting-item"><label id="sound-label">🔊 Ses:</label><input type="checkbox" id="sound-toggle" checked></div>
-                <div class="setting-item"><label id="vibration-label">📳 Titreşim:</label><input type="checkbox" id="vibration-toggle" checked></div>
-            </div>
-            <button class="btn btn--secondary" id="settings-close">Kapat</button>
-        </div>
-    </div>
-
-    <!-- QR Modal, Game Screen, Pause Screen, Game Over Screen, Achievement Popup -->
-    <!-- (ID’ler ve sınıflar app.js ile tam uyumlu) -->
-
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
