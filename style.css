@@ -755,3 +755,34 @@ input[type="checkbox"] {
         display: none !important;
     }
 }
+/* Sabit reklam alanları */
+.ad-section.fixed {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+.ad-section.fixed.left  { left: 0; }
+.ad-section.fixed.right { right: 0; }
+
+/* Main-container’ın yan boşlukları */
+.main-container {
+  margin-left: 120px;
+  margin-right: 120px;
+}
+
+/* Mobilde reklamları gizle */
+@media (max-width: 768px) {
+  .ad-section.fixed { display: none; }
+  .main-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
