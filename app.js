@@ -1853,31 +1853,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Oyunu başlat
     window.game = new BubblePopGame();
-// === Reklam Gösterme / Gizleme Fonksiyonları ===
-function showAds() {
-    document.querySelectorAll('.ad-container').forEach(ad => ad.classList.remove('hidden'));
-}
-
-function hideAds() {
-    document.querySelectorAll('.ad-container').forEach(ad => ad.classList.add('hidden'));
-}
-
-// "Oyna" butonuna basıldığında reklamları göster
-const playBtn = document.getElementById('play-btn');
-if (playBtn) {
-    playBtn.addEventListener('click', () => {
-        showAds();
-    });
-}
-
-// Ana menüye dönüldüğünde veya oyun bitince reklamları gizle
-const mainMenuBtn = document.getElementById('main-menu-btn');
-const backToMenuBtn = document.getElementById('back-to-menu-btn');
-const restartBtn = document.getElementById('restart-btn');
-
-if (mainMenuBtn) mainMenuBtn.addEventListener('click', hideAds);
-if (backToMenuBtn) backToMenuBtn.addEventListener('click', hideAds);
-if (restartBtn) restartBtn.addEventListener('click', hideAds);
 });
 
 // Service Worker
