@@ -758,7 +758,8 @@ input[type="checkbox"] {
 .ad-section.fixed {
   position: fixed;
   top: 60px;
-  height: calc(100vh - 60px);
+  bottom: 0;
+  /*height: calc(100vh - 60px);*/
   width: 120px;
   background: #fff;
   display: flex;
