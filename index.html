@@ -3,35 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="google-adsense-account" content="ca-pub-8468426148009047">
     <title>Bubble Pop Mania - Milyonların Favorisi</title>
-    
-    <meta name="description" content="Türkiye'nin en bağımlılık yapan balon patlatma oyunu! Milyonlarca oyuncunun favorisi.">
+
+    <meta name="description" content="Türkiye's en bağımlılık yapan balon patlatma oyunu! Milyonlarca oyuncunun favorisi.">
     <meta name="keywords" content="oyun, balon patlatma, bubble pop, mobile game, turkish game">
     <meta name="author" content="Eyedeu">
-    
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3B82F6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    
-    <link rel="stylesheet" href="style.css">
-        <!-- AdSense Başlangıcı -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8468426148009047"
-        crossorigin="anonymous"></script>
-</head>
-<body>
-        <!-- Sol Reklam -->
-    <div class="ad-section fixed left">
-        <ins class="adsbygoogle"
-             style="display:block; width:120px; height:600px;"
-             data-ad-client="ca-pub-8468426148009047"
-             data-ad-slot="7358041106">
-             </ins>
-        <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-    </div>
 
+    <link rel="stylesheet" href="style.css">
+</head><body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
@@ -45,18 +30,21 @@
     <div id="main-menu" class="screen hidden">
         <div class="menu-container">
             <h1 class="game-title" id="title">🫧 BUBBLE POP MANIA 🫧</h1>
+            <!-- YENİ: Oyuncu Adı Görüntüleme Alanı BAŞLANGIÇ -->
+            <p id="current-player-name" class="current-player-name"></p>
+            <!-- YENİ: Oyuncu Adı Görüntüleme Alanı SON -->
             <p class="game-subtitle" id="subtitle">Milyonlarca Oyuncunun Bağımlısı Olduğu Oyun!</p>
-            
+
             <div class="daily-streak">
                 <span class="streak-text" id="daily-streak-text">🔥 Günlük Seri: <span id="daily-streak">1</span> Gün</span>
             </div>
-            
+
             <button class="btn btn--primary btn--lg" id="play-btn">🎯 OYNA</button>
             <button class="btn btn--secondary" id="tutorial-btn">📚 Nasıl Oynanır</button>
             <button class="btn btn--secondary" id="download-mobile-btn">📱 Telefona İndir</button>
             <button class="btn btn--secondary" id="achievements-btn">🏆 Başarılar</button>
             <button class="btn btn--secondary" id="settings-btn">⚙️ Ayarlar</button>
-            
+
             <div class="energy-container">
                 <span class="energy-label" id="energy-label">⚡ Enerji:</span>
                 <div class="energy-bar">
@@ -91,7 +79,7 @@
                     <span class="step-number">2</span>
                     <p><strong id="color-title">Renkli Puanlar:</strong><br>
                     <span id="color-desc">🔵 Mavi = 1 puan<br>
-                    🟢 Yeşil = 2 puan<br>  
+                    🟢 Yeşil = 2 puan<br>
                     🔴 Kırmızı = 5 puan<br>
                     🟡 Altın = 10 puan<br>
                     🟣 Elmas = 50 puan</span></p>
@@ -132,21 +120,32 @@
                     <label id="vibration-label">📳 Titreşim:</label>
                     <input type="checkbox" id="vibration-toggle" checked>
                 </div>
-            </div>
+                <!-- YENİ: Kullanıcı Adı Bölümü BAŞLANGIÇ -->
+                <div class="setting-item user-name-section">
+                    <label id="username-label">Kullanıcı Adı:</label>
+                    <div class="username-input-wrapper">
+                        <input type="text" id="username-input" placeholder="Yeni kullanıcı adınızı girin" maxlength="15">
+                        <button id="save-username-btn" class="btn btn--secondary btn--small">Kaydet</button>
+                    </div>
+                    <p id="username-status" class="status-message"></p>
+                </div>
+                <!-- YENİ: Kullanıcı Adı Bölümü SON -->
+            </div> <!-- Bu div kapanışı .settings-content'e ait -->
             <button class="btn btn--secondary" id="settings-close">Kapat</button>
         </div>
     </div>
+
 
     <!-- QR Kod Modal -->
     <div id="qr-modal" class="screen hidden overlay">
         <div class="modal-container qr-modal">
             <h2 id="download-title">📱 Telefona İndir</h2>
             <p id="download-desc">Bu QR kodu telefonunla tara ve oyunu ana ekrana ekle!</p>
-            
+
             <div class="qr-container">
                 <div id="qr-code-display">QR Kod Yükleniyor...</div>
             </div>
-            
+
             <div class="download-options">
                 <div class="download-option">
                     <h3 id="mobile-title">📱 Android & iPhone</h3>
@@ -155,7 +154,7 @@
                        3. "Ana ekrana ekle" seçeneğini seç<br>
                        4. Artık telefonda app gibi çalışır! 🎮</p>
                 </div>
-                
+
                 <div class="download-option">
                     <h3 id="manual-title">🔗 Manuel Link</h3>
                     <p id="manual-desc">QR kod çalışmıyorsa bu linki kullan:</p>
@@ -174,7 +173,7 @@
                     <button class="btn btn--social twitter" id="share-twitter">🐦 Twitter</button>
                 </div>
             </div>
-            
+
             <button class="btn btn--secondary" id="close-qr-btn">Kapat</button>
         </div>
     </div>
@@ -193,7 +192,7 @@
                     <span id="current-combo" class="value combo-value">1x</span>
                 </div>
             </div>
-            
+
             <div class="hud-right">
                 <div class="hud-item">
                     <span class="label" id="level-label">Seviye:</span>
@@ -209,17 +208,29 @@
         <!-- Oyun Alanı -->
         <div class="game-area">
             <canvas id="game-canvas" width="400" height="500"></canvas>
-            
+
             <!-- Pause Button - SAĞ ÜSTTE -->
             <button id="pause-btn" class="pause-btn" title="Oyunu Duraklat">⏸️</button>
         </div>
 
         <!-- Power-ups -->
         <div class="powerups-container">
-            <button class="powerup-btn" id="freeze-btn" title="5 saniye dondurur">🧊<span id="freeze-text">Dondur</span></button>
-            <button class="powerup-btn" id="double-btn" title="10 saniye 2x puan">⭐<span id="double-text">2x Puan</span></button>
-            <button class="powerup-btn" id="magnet-btn" title="Kabarcıkları çeker">🧲<span id="magnet-text">Mıknatıs</span></button>
-            <button class="powerup-btn" id="auto-btn" title="15 saniye otomatik patlatır">🤖<span id="auto-text">Otomatik</span></button>
+            <button class="powerup-btn" id="freeze-btn" title="5 saniye dondurur">
+                ❄️<span id="freeze-text">Dondur</span>
+                (<span class="use-count" id="freeze-count">1</span>)
+            </button>
+            <button class="powerup-btn" id="double-btn" title="10 saniye 2x puan">
+                ⭐<span id="double-text">2x Puan</span>
+                (<span class="use-count" id="double-count">1</span>)
+            </button>
+            <button class="powerup-btn" id="magnet-btn" title="Kabarcıkları çeker">
+                🧲<span id="magnet-text">Mıknatıs</span>
+                (<span class="use-count" id="magnet-count">1</span>)
+            </button>
+            <button class="powerup-btn" id="auto-btn" title="15 saniye otomatik patlatır">
+                🤖<span id="auto-text">Otomatik</span>
+                (<span class="use-count" id="auto-count">1</span>)
+            </button>
         </div>
     </div>
 
@@ -229,9 +240,20 @@
             <h2 id="pause-title">⏸️ Oyun Duraklatıldı</h2>
             <p id="pause-desc">Oyuna devam etmek istediğinde butona bas!</p>
             <div class="pause-stats">
-                <div class="stat" id="pause-score-text">Mevcut Puan: <span id="pause-score">0</span></div>
-                <div class="stat" id="pause-combo-text">Combo: <span id="pause-combo">1x</span></div>
-                <div class="stat" id="pause-lives-text">Kalan Can: <span id="pause-lives">5</span></div>
+                <div class="pause-stats">
+                    <div class="stat">
+                        <span id="pause-score-label"></span>
+                        <span id="pause-score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span id="pause-combo-label"></span>
+                        <span id="pause-combo">1x</span>
+                    </div>
+                    <div class="stat">
+                        <span id="pause-lives-label"></span>
+                        <span id="pause-lives">5</span>
+                    </div>
+                </div>
             </div>
             <button class="btn btn--primary" id="resume-btn">▶️ Devam Et</button>
             <button class="btn btn--secondary" id="restart-btn">🔄 Yeniden Başla</button>
@@ -266,12 +288,26 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="game-over-actions">
                 <button class="btn btn--primary" id="play-again-btn">🔄 Tekrar Oyna</button>
                 <button class="btn btn--secondary" id="share-score-btn">📱 Puanı Paylaş</button>
                 <button class="btn btn--tertiary" id="back-to-menu-btn">🏠 Ana Menü</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Liderlik Tablosu Ekranı -->
+    <div id="leaderboard-screen" class="screen hidden overlay">
+        <div class="modal-container">
+            <h2 id="leaderboard-title">🏆 Liderlik Tablosu</h2>
+            <div id="leaderboard-content" class="leaderboard-list">
+                <!-- Liderlik tablosu buraya dinamik olarak eklenecek -->
+            </div>
+            <div id="player-rank" class="player-rank">
+                <!-- Oyuncunun sırası buraya eklenecek -->
+            </div>
+            <button class="btn btn--secondary" id="leaderboard-close-btn">Kapat</button>
         </div>
     </div>
 
@@ -287,7 +323,13 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- ✅ Firebase SDK (Compat sürümleri - Android WebView uyumlu) -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+
+    <!-- JavaScript (Firebase yüklendikten sonra çalıştırılır) -->
     <script src="app.js"></script>
+
 </body>
 </html>
